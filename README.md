@@ -2,6 +2,14 @@
 Frontend application for Quibble
 
 
-# React App Setup
-Install dependencies using 'npm install'
-Start React App using 'npm start'
+## Setup
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the React App:
+   ```bash
+   npm start
+   ```
+
