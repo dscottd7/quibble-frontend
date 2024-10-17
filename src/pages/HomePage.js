@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { UrlForm } from '../components/UrlForm';
 
 
 const HomePage = () => {
@@ -37,35 +38,9 @@ const HomePage = () => {
             <p> OpenAI will compare description information for these products and return a summary </p>
         </div>
 
-        <form onSubmit={handleSubmit} className='links'>
-          <div>
-            <input
-              type='url'
-              id='url1'
-              name='url1'
-              value={urls.url1}
-              onChange={handleChange}
-              placeholder='Product 1 URL'
-              required
-            />
-          </div>
-          
-          <div>
-            <input
-              type='url'
-              id='url2'
-              name='url2'
-              value={urls.url2}
-              onChange={handleChange}
-              placeholder='Product 2 URL'
-              required
-            />
-          </div>
-          <button type='submit'>Compare</button>
-        </form>
+        <UrlForm urls={urls} handleChange={handleChange} handleSubmit={handleSubmit} />
+        
     </div>
-
-
   )
 }
 
