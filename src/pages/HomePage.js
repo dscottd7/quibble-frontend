@@ -1,6 +1,31 @@
-import React from 'react'
+import React, {useState} from 'react';
+import { UrlForm } from '../components/UrlForm';
+
 
 const HomePage = () => {
+
+  // set state for urls
+  const [urls, setUrls] = useState({
+    url1: '',
+    url2: ''
+  });
+
+  // change states for urls
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setUrls((prevUrls) => ({
+      ...prevUrls,
+      [name]: value,
+    }));
+  }
+
+  // perform action with the URLS
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('URL 1:', urls.url1);
+    console.log('URL 2:', urls.url2);
+  }
+
   return (
     <div className='homepage'>
         <div className='navbar'> 
@@ -13,14 +38,9 @@ const HomePage = () => {
             <p> OpenAI will compare description information for these products and return a summary </p>
         </div>
 
-        <div className='links'>
-            <h2> Products to compare </h2>
-            <input name='link1' placeholder='Product URL 1'/>
-            <input name='link2' placeholder='Product URL 2'/>
-        </div>
+        <UrlForm urls={urls} handleChange={handleChange} handleSubmit={handleSubmit} />
+        
     </div>
-
-
   )
 }
 
