@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { UrlForm } from '../components/UrlForm';
+import ReactMarkdown from 'react-markdown';
 
 
 
@@ -28,8 +29,7 @@ const HomePage = () => {
   // perform action with the URLS
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log('URL 1:', urls.url1);
-    // console.log('URL 2:', urls.url2);
+    setComparison('Comparing...');
     try {
       const res = await fetch(`${FETCH_URL}/compare`, {
         method: 'POST',
@@ -50,6 +50,7 @@ const HomePage = () => {
       setComparison(data);
     } catch (error) {
       console.error('Error', error);
+      setComparison('Failed to compare products. Please try again.');
     }
   };
 
@@ -67,7 +68,11 @@ const HomePage = () => {
 
         <UrlForm urls={urls} handleChange={handleChange} handleSubmit={handleSubmit} />
         
-        <div>{comparison}</div>
+        <div>
+          <ReactMarkdown>
+            {comparison}
+          </ReactMarkdown>
+        </div>
     </div>
   )
 }
