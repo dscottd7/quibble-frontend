@@ -1,35 +1,51 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { UrlForm } from '../components/UrlForm';
 import ReactMarkdown from 'react-markdown';
 
-
-
 const HomePage = () => {
-
-  const FETCH_URL = 'http://localhost:8000'
-
-  // set state for urls
+  const FETCH_URL = 'http://localhost:8000';
+  
   const [urls, setUrls] = useState({
     url1: '',
     url2: ''
   });
-
-  // set state for comparison result
+  
+  const [preferences, setPreferences] = useState({
+    selected_categories: [],
+    user_preference: ''
+  });
+  
   const [comparison, setComparison] = useState('');
-
-  // change states for urls
+  const [error, setError] = useState('');
+  
   const handleChange = (e) => {
-    const {name, value} = e.target;
-    setUrls((prevUrls) => ({
-      ...prevUrls,
-      [name]: value,
-    }));
-  }
+    const { name } = e.target;
+    
+    if (name === 'url1' || name === 'url2') {
+      setUrls(prevUrls => ({
+        ...prevUrls,
+        [name]: e.target.value,
+      }));
+    } else if (name === 'selected_categories') {
+      const selectedOptions = Array.from(e.target.selectedOptions);
+      const selectedValues = selectedOptions.map(option => option.value);
+      setPreferences(prevPreferences => ({
+        ...prevPreferences,
+        selected_categories: selectedValues,
+      }));
+    } else {
+      setPreferences(prevPreferences => ({
+        ...prevPreferences,
+        [name]: e.target.value,
+      }));
+    }
+  };
 
-  // perform action with the URLS
   const handleSubmit = async (e) => {
     e.preventDefault();
     setComparison('Comparing...');
+    setError('');
+    
     try {
       const res = await fetch(`${FETCH_URL}/compare`, {
         method: 'POST',
@@ -37,44 +53,70 @@ const HomePage = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          url1: urls.url1,
-          url2: urls.url2,
+          urls: {
+            url1: urls.url1,
+            url2: urls.url2
+          },
+          user_input: {
+            selected_categories: preferences.selected_categories,
+            user_preference: preferences.user_preference,
+          },
         }),
       });
-
+      
       if (!res.ok) {
-        throw new Error('Failed to fetch /compare');
+        throw new Error(`Failed to fetch /compare: ${res.status}`);
       }
-
+      
       const data = await res.json();
-      setComparison(data);
+      
+      // Extract the comparison text from the response
+      if (data && data.comparison) {
+        setComparison(data.comparison);
+      } else {
+        throw new Error('Response did not contain comparison data');
+      }
     } catch (error) {
-      console.error('Error', error);
-      setComparison('Failed to compare products. Please try again.');
+      console.error('Error:', error);
+      setError('Failed to compare products. Please try again.');
+      setComparison('');
     }
   };
 
   return (
-    <div className='homepage'>
-        <div className='navbar'> 
-            <div> Quibble </div>
-            <div> Hamburger Menu</div>
-        </div> 
-
-        <div className='description'>
-            <h1> Provide Links to two Products to Compare </h1>
-            <p> OpenAI will compare description information for these products and return a summary </p>
+    <div className="homepage">
+      <nav className="navbar">
+        <div className="logo">Quibble</div>
+        <button className="hamburger-menu" aria-label="Menu">
+          ☰
+        </button>
+      </nav>
+      
+      <div className="description">
+        <h1>Provide Links to Two Products to Compare</h1>
+        <p>OpenAI will compare description information for these products and return a summary</p>
+      </div>
+      
+      <UrlForm
+        urls={urls}
+        preferences={preferences}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
+      
+      {error && (
+        <div className="error-message" role="alert">
+          {error}
         </div>
-
-        <UrlForm urls={urls} handleChange={handleChange} handleSubmit={handleSubmit} />
-        
-        <div>
-          <ReactMarkdown>
-            {comparison}
-          </ReactMarkdown>
+      )}
+      
+      {comparison && !error && (
+        <div className="comparison-result">
+          <ReactMarkdown>{comparison}</ReactMarkdown>
         </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
