@@ -84,19 +84,12 @@ const HomePage = () => {
   };
 
   return (
-    <div className="homepage">
-      <nav className="navbar">
-        <div className="logo">Quibble</div>
-        <button className="hamburger-menu" aria-label="Menu">
-          ☰
-        </button>
-      </nav>
-      
+    <div className="homepage">  
       <div className="description">
-        <h1>Provide Links to Two Products to Compare</h1>
-        <p>OpenAI will compare description information for these products and return a summary</p>
+        <h2>Compare any two products!</h2>
+        <p>Paste the URL of any two products in the fields below, and click COMPARE for a comparison</p>
       </div>
-      
+
       <UrlForm
         urls={urls}
         preferences={preferences}
