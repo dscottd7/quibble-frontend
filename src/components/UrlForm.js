@@ -1,16 +1,15 @@
 import {React, useState } from 'react';
-import { TextInput,Button} from '@mantine/core';
-import { IconChevronDown } from '@tabler/icons-react';
+import { TextInput, Button, Textarea, Switch, Group} from '@mantine/core';
+import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import classes from '../styles/FormMenu.module.css';
 
-export const UrlForm = ({ urls, preferences, handleChange, handleSubmit }) => {
+export const UrlForm = ({ urls, preferences, handleChange, handleSubmit}) => {
   
   const [open, setOpen] = useState(false);
 
   return (
-    <div>
-      
-      <form onSubmit={handleSubmit} className="links">
+    <div className={classes.form_container}>
+      <form onSubmit={handleSubmit}>
         <div >
           <TextInput 
             type='url'
@@ -34,45 +33,43 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit }) => {
           />
         </div>
 
-      <Button onClick={() => setOpen(!open)} variant='transparent' color="black" size='md' >
-        {open ? 'Hide comparison options' : 'More comparison options'}
-        <IconChevronDown />
-      </Button>
-      { open && 
-        (<div >
-          <label htmlFor="selected_categories">Select Categories:</label>
-          <select
-            id="selected_categories"
-            name="selected_categories"
-            multiple
-            value={preferences.selected_categories}
-            onChange={handleChange}
-            className="categories-select"
-          >
-            <option value="Price">Price</option>
-            <option value="Model">Model</option>
-            <option value="Condition">Condition</option>
-            <option value="Features">Features</option>
-            <option value="Delivery">Delivery</option>
-          </select>
-          <div className="form-group">
-          <input
-            type="text"
-            id="user_preference"
-            name="user_preference"
-            value={preferences.user_preference}
-            onChange={handleChange}
-            placeholder="Any additional comparison instructions?"
-            className="preference-input"
-          />
-        </div>
+        <Button onClick={() => setOpen(!open)} variant='transparent' color="black" size='md'>
+          {open ? <label className={classes.options_label}>Hide comparison options</label> : <label className={classes.options_label}>More comparison options</label>}
+          {open ? <IconChevronUp /> : <IconChevronDown />}
+        </Button>
+        { open && 
+          (<div className={classes.options}>
+
+            <Switch.Group
+              value={preferences.selected_categories}
+              onChange={handleChange}
+              description='Select the categories you want to compare'
+            >
+              <Group mt="xs">
+                <Switch value='Price' label='Price' />
+                <Switch value='Model' label='Model' />
+                <Switch value='Condition' label='Condition' />
+                <Switch value='Features' label='Features' />
+                <Switch value='Delivery' label='Delivery' />
+              </Group>
+            </Switch.Group>
+
+            <div>
+              <Textarea
+                name="user_preference"
+                mt="md"
+                placeholder="Any additional comparison instructions?"
+                onChange={handleChange}
+                resize='vertical'
+                autosize
+                minRows={4}
+              />
+            </div>
         </div> 
       )}
-        
-    
-        
+
         <br/>
-        <button type="submit" className="submit-button">
+        <button type="submit" className={classes.submit_button}>
           Compare
         </button>
       </form>

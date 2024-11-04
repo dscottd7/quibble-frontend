@@ -17,32 +17,37 @@ const HomePage = () => {
   
   const [comparison, setComparison] = useState('');
   const [error, setError] = useState('');
-  
+
   const handleChange = (e) => {
-    const { name } = e.target;
-    
-    if (name === 'url1' || name === 'url2') {
-      setUrls(prevUrls => ({
-        ...prevUrls,
-        [name]: e.target.value,
-      }));
-    } else if (name === 'selected_categories') {
-      const selectedOptions = Array.from(e.target.selectedOptions);
-      const selectedValues = selectedOptions.map(option => option.value);
-      setPreferences(prevPreferences => ({
+    if (Array.isArray(e)) {
+      // Handle category change (from Switch.Group)
+      setPreferences((prevPreferences) => ({
         ...prevPreferences,
-        selected_categories: selectedValues,
+        selected_categories: e,
       }));
     } else {
-      setPreferences(prevPreferences => ({
-        ...prevPreferences,
-        [name]: e.target.value,
-      }));
+      const { name, value } = e.target || {};
+  
+      if (name === 'url1' || name === 'url2') {
+        // Handle URL fields
+        setUrls((prevUrls) => ({
+          ...prevUrls,
+          [name]: value,
+        }));
+      } else if (name === 'user_preference') {
+        // Handle additional instructions (textarea)
+        setPreferences((prevPreferences) => ({
+          ...prevPreferences,
+          user_preference: value,
+        }));
+      }
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('urls:', urls);
+    console.log('preferences:', preferences);
     setComparison('Comparing...');
     setError('');
     
