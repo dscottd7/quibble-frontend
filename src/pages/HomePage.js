@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { UrlForm } from '../components/UrlForm';
 import ReactMarkdown from 'react-markdown';
+import { Header } from '../components/Header';
 
 const HomePage = () => {
   const FETCH_URL = 'http://localhost:8000';
