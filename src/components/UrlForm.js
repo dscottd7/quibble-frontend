@@ -50,7 +50,7 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit}) => {
                 <Switch value='Model' label='Model' />
                 <Switch value='Condition' label='Condition' />
                 <Switch value='Features' label='Features' />
-                <Switch value='Delivery' label='Delivery' />
+                <Switch value='Estimated Delivery' label='Delivery' />
               </Group>
             </Switch.Group>
 
