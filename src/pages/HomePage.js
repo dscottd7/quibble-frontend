@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { UrlForm } from '../components/UrlForm';
 import ReactMarkdown from 'react-markdown';
+import { Header } from '../components/Header';
 
 const HomePage = () => {
   const FETCH_URL = 'http://localhost:8000';
@@ -17,32 +18,37 @@ const HomePage = () => {
   
   const [comparison, setComparison] = useState('');
   const [error, setError] = useState('');
-  
+
   const handleChange = (e) => {
-    const { name } = e.target;
-    
-    if (name === 'url1' || name === 'url2') {
-      setUrls(prevUrls => ({
-        ...prevUrls,
-        [name]: e.target.value,
-      }));
-    } else if (name === 'selected_categories') {
-      const selectedOptions = Array.from(e.target.selectedOptions);
-      const selectedValues = selectedOptions.map(option => option.value);
-      setPreferences(prevPreferences => ({
+    if (Array.isArray(e)) {
+      // Handle category change (from Switch.Group)
+      setPreferences((prevPreferences) => ({
         ...prevPreferences,
-        selected_categories: selectedValues,
+        selected_categories: e,
       }));
     } else {
-      setPreferences(prevPreferences => ({
-        ...prevPreferences,
-        [name]: e.target.value,
-      }));
+      const { name, value } = e.target || {};
+  
+      if (name === 'url1' || name === 'url2') {
+        // Handle URL fields
+        setUrls((prevUrls) => ({
+          ...prevUrls,
+          [name]: value,
+        }));
+      } else if (name === 'user_preference') {
+        // Handle additional instructions (textarea)
+        setPreferences((prevPreferences) => ({
+          ...prevPreferences,
+          user_preference: value,
+        }));
+      }
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('urls:', urls);
+    console.log('preferences:', preferences);
     setComparison('Comparing...');
     setError('');
     
@@ -84,19 +90,12 @@ const HomePage = () => {
   };
 
   return (
-    <div className="homepage">
-      <nav className="navbar">
-        <div className="logo">Quibble</div>
-        <button className="hamburger-menu" aria-label="Menu">
-          ☰
-        </button>
-      </nav>
-      
+    <div className="homepage">  
       <div className="description">
-        <h1>Provide Links to Two Products to Compare</h1>
-        <p>OpenAI will compare description information for these products and return a summary</p>
+        <h2>Compare any two products!</h2>
+        <p>Paste the URL of any two products in the fields below, and click COMPARE for a comparison</p>
       </div>
-      
+
       <UrlForm
         urls={urls}
         preferences={preferences}

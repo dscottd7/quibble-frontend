@@ -1,0 +1,41 @@
+.form_container {
+    width: 100%;
+    max-width: 656.32px;
+    margin: 0 auto;
+}
+
+.url_input {
+    border-color: transparent;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.options_label {
+    font-size: small;
+    font-weight: normal;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+}
+
+.category_select {
+    margin: 10px 0;
+}
+
+
+.preference_input{
+    margin: 10px 0;
+}
+
+.submit_button {
+    background-color: #237fb7;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 10px auto;
+    display: block; 
+}
