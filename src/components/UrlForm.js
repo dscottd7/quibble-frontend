@@ -3,7 +3,7 @@ import { TextInput, Button, Textarea, Switch, Group} from '@mantine/core';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import classes from '../styles/FormMenu.module.css';
 
-export const UrlForm = ({ urls, preferences, handleChange, handleSubmit}) => {
+export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, isLoading}) => {
   
   const [open, setOpen] = useState(false);
 
