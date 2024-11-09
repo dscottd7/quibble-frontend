@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import { Header } from '../components/Header';
 
 const HomePage = () => {
-  const FETCH_URL = 'http://localhost:8000';
+  const FETCH_URL = 'https://quibble-backend-64265842032.us-central1.run.app/'; //'http://localhost:8000';
   
   const [urls, setUrls] = useState({
     url1: '',

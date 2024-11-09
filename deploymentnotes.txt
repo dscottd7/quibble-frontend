@@ -17,6 +17,8 @@ How to: build docker image, push to docker hub, deploy via Google Cloud Run UI
 
 How to: build and test locally:
 1. Build image: docker build -t quibblefrontend-image1 .
-2. Run image locally on port 3000 - no bash script here, but should need one (I don't think the dockerimage used here has a bash script), but the docker-compose.yml file can be used to run the image locally and should take care of "npm start" needed
+2. Run image locally on port 3000: docker run -p 3000:80 quibblefrontend-image1
+ - nginx wants to use port 80 by default, so "-p 3000:80" is used to map port 3000 on your local machine to port 80 in the container, which is where nginx serves the app
+ - no bash script here, but should not need one (I don't think the dockerimage used here has a bash script), but the docker-compose.yml file can be used to run the image locally and should take care of "npm start" needed
 3. Alternative apporach - "compose up" (uses compose.yml file to build image and run containter): docker-compose up --build
 - "--build" flag is to rebuild the image if it already exists

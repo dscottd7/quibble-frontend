@@ -1,18 +1,35 @@
-FROM node:18-alpine
+# from researching, it appears that multi-stage builds are required to get react apps 
+# Stage 1: Build the React app
+FROM node:18 AS builder
 
-# Set this new directory as our working directory for subsequent instructions
+# Set the working directory
 WORKDIR /dockerapp
 
-# Copy relevant files in the current directory into the container
-COPY public/ /dockerapp/public
-COPY src/ /dockerapp/src
-COPY package.json /dockerapp/package.json
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Install all the node modules required by the React app
+# Install dependencies
 RUN npm install
 
-# Expose the port on which the React app will run
-EXPOSE 3000
+# Copy the rest of the application code - note that .dockerignore applies here (only things not ignored are considered)
+COPY . .
+#COPY public/ /dockerapp/public
+#COPY src/ /dockerapp/src
 
 # Build the React app
-CMD ["npm", "start"]
+RUN npm run build
+
+# Stage 2: Serve the app with a lightweight server
+FROM nginx:alpine
+
+# Copy built files from the previous stage to nginx public folder
+COPY --from=builder /dockerapp/build /usr/share/nginx/html
+
+# Expose port 300 (be sure that this is the port Cloud Run expects)
+#EXPOSE 3000
+
+# Expose port 80 - this is nginx default
+EXPOSE 80
+
+# Start nginx server
+CMD ["nginx", "-g", "daemon off;"]
