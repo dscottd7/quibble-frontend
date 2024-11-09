@@ -1,0 +1,22 @@
+Brendan - Nov 9
+- trying to keep some notes here on docker image deployment to google cloud run
+- things I have changed that I think are useful:
+1. The CMD in Dockerfile should be in JSON array format (this is more reliable): CMD ["npm", "start"]
+2. The "--reload" flag on our uvicorn server should NOT be used for deployment (just local dev)
+3. The desired port (3000) should be "exposed" in the Dockerfile: EXPOSE 3000 
+4. ***MOST IMPORTANT - if using a Mac, when you go to create an image to deploy to Google Cloud, you must build with the "--platform linux/amd64" flag*****
+
+
+How to: build docker image, push to docker hub, deploy via Google Cloud Run UI
+1. Build image: docker build --platform linux/amd64 -t jbh14/quibble-frontend:1.0.1 .
+- (can omit the repo name, "jbh14/quibble-frontend" in this case, if you want to build locally)
+- "--platform linux/amd64" is CRUCIAL for Mac users to build images that can be deployed to Google Cloud Run, but should not be used for local testing
+2. If wanted to deploy to Google Cloud Run, Login to docker if needed: docker login
+3. Push image to docker hub: docker push jbh14/quibble-frontend:1.0.1
+4. Create Cloud Run deployment via UI - list docker hub image URL, allow unauthenticated invocations, set port to 3000
+
+How to: build and test locally:
+1. Build image: docker build -t quibblefrontend-image1 .
+2. Run image locally on port 3000 - no bash script here, but should need one (I don't think the dockerimage used here has a bash script), but the docker-compose.yml file can be used to run the image locally and should take care of "npm start" needed
+3. Alternative apporach - "compose up" (uses compose.yml file to build image and run containter): docker-compose up --build
+- "--build" flag is to rebuild the image if it already exists
