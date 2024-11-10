@@ -5,9 +5,6 @@ export const Header = () => {
     <div>
       <nav className="navbar">
         <div className="logo">Quibble</div>
-        <button className="hamburger-menu" aria-label="Menu">
-          ☰
-        </button>
       </nav>
     </div>
   )

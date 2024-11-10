@@ -1,0 +1,37 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const ComparisonHistorySidebar = ({ history, onDelete, onSelect }) => {
+  return (
+    <div className="comparison-history-sidebar" style={{ width: '300px', background: '#f4f4f4', padding: '10px', overflowY: 'auto' }}>
+      <h3>Previous Comparisons</h3>
+      <ul style={{ listStyle: 'none', padding: 0 }}>
+        {history.map((item, index) => (
+          <li key={index} style={{ marginBottom: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <button 
+                onClick={() => onSelect(item.comparison)} 
+                style={{ flex: 1, marginRight: '5px', textAlign: 'left' }}>
+                {item.title || `Comparison ${index + 1}`}
+              </button>
+              <button 
+                onClick={() => onDelete(index)} 
+                style={{ background: 'red', color: 'white', border: 'none', padding: '5px' }}>
+                Delete
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+ComparisonHistorySidebar.propTypes = {
+  history: PropTypes.array.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
+};
+
+export default ComparisonHistorySidebar;
+
