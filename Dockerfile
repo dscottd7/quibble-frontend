@@ -1,4 +1,4 @@
-# from researching, it appears that multi-stage builds are required to get react apps 
+# from researching, it appears that multi-stage builds are required for react apps 
 # Stage 1: Build the React app
 FROM node:18 AS builder
 
@@ -24,9 +24,6 @@ FROM nginx:alpine
 
 # Copy built files from the previous stage to nginx public folder
 COPY --from=builder /dockerapp/build /usr/share/nginx/html
-
-# Expose port 300 (be sure that this is the port Cloud Run expects)
-#EXPOSE 3000
 
 # Expose port 80 - this is nginx default
 EXPOSE 80

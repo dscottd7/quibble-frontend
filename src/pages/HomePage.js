@@ -4,8 +4,9 @@ import ReactMarkdown from 'react-markdown';
 import { Header } from '../components/Header';
 
 const HomePage = () => {
-  const FETCH_URL = 'https://quibble-backend-64265842032.us-central1.run.app/'; //'http://localhost:8000';
-  
+  // reads URL from .env - be sure to list 'REACT_APP_BACKEND_URL=http://localhost:8000' there if wanting to test fetching from locally running backend app
+  const FETCH_URL = process.env.REACT_APP_BACKEND_URL || 'https://quibble-backend-64265842032.us-central1.run.app';
+
   const [urls, setUrls] = useState({
     url1: '',
     url2: ''
@@ -84,7 +85,7 @@ const HomePage = () => {
       }
     } catch (error) {
       console.error('Error:', error);
-      setError('Failed to compare products. Please try again.');
+      setError(error); 
       setComparison('');
     }
   };
