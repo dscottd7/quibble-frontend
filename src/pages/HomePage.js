@@ -4,8 +4,8 @@ import ReactMarkdown from 'react-markdown';
 import { Header } from '../components/Header';
 
 const HomePage = () => {
-  // reads URL from .env - be sure to list 'REACT_APP_BACKEND_URL=http://localhost:8000' there if wanting to test fetching from locally running backend app
-  const FETCH_URL = process.env.REACT_APP_BACKEND_URL || 'https://quibble-backend-64265842032.us-central1.run.app';
+  // reads URL from .env (set REACT_APP_BACKEND_URL there) or defaults to localhost for local testing if nothing found there
+  const FETCH_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
   const [urls, setUrls] = useState({
     url1: '',
