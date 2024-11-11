@@ -4,8 +4,9 @@ import ReactMarkdown from 'react-markdown';
 import ProgressBarr from '../components/Progress';
 import ActionButton from '../components/ActionButton';
 
+
 const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison }) => {
-  const FETCH_URL = 'http://localhost:8000';
+  const FETCH_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
   const initialUrlsState = { url1: '', url2: '' };
   const initialPreferencesState = { selected_categories: [], user_preference: '' };
@@ -119,7 +120,7 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
       }
     } catch (error) {
       console.error('Error:', error);
-      setError('Failed to compare products. Please try again.');
+      setError(error); 
       setComparison('');
       setLoading(false);
     }
