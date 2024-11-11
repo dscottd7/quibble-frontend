@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { UrlForm } from '../components/UrlForm';
 import { Button } from '@mantine/core';
 import ReactMarkdown from 'react-markdown';
-import ProgressBarr from '../components/Progress';
+import { Progress } from '@mantine/core';
 import ActionButton from '../components/ActionButton';
 
 const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison }) => {
@@ -254,7 +254,7 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
       {/* Loading Progress Bar */}
       {loading && (
         <div style={{ width: '300px', margin: '0 auto' }}>
-          <ProgressBarr value={progress} />
+          <Progress value={progress} />
         </div>
       )}
       
