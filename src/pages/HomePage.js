@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { UrlForm } from '../components/UrlForm';
+import { Button } from '@mantine/core';
 import ReactMarkdown from 'react-markdown';
-import { Loader2 } from "lucide-react";
 
 const HomePage = () => {
   const WEBSOCKET_URL = 'ws://localhost:8000/ws/compare';
@@ -158,10 +158,10 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="homepage max-w-4xl mx-auto p-6">
-      <div className="description mb-8">
-        <h2 className="text-2xl font-bold mb-2">Compare any two products!</h2>
-        <p className="text-gray-600">
+    <div className="homepage">
+      <div className="description">
+        <h2>Compare any two products!</h2>
+        <p>
           Paste the URL of any two products in the fields below, and click COMPARE for a comparison
         </p>
       </div>
@@ -175,29 +175,28 @@ const HomePage = () => {
       />
 
       {status.isProcessing && (
-        <div className="flex items-center justify-between p-4 my-4 bg-blue-50 rounded-lg">
-          <div className="flex items-center gap-3">
-            <Loader2 className="h-4 w-4 animate-spin" />
-            <span>{status.currentStep}</span>
+        <div className="websocket-status">
+          <div className="websocket-status-message">
+            <p>{status.currentStep}</p>
           </div>
-          <button
+          <Button
+            variant="outline"
             onClick={handleCancel}
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
           >
-            Cancel
-          </button>
+            Cancel Request
+          </Button>
         </div>
       )}
       
       {status.error && (
-        <div className="error-message p-4 my-4 bg-red-50 text-red-700 rounded-lg" role="alert">
+        <div className="error-message" role="alert">
           {status.error}
         </div>
       )}
       
       {status.comparison && (
-        <div className="comparison-result my-6 p-6 bg-white rounded-lg shadow">
-          <ReactMarkdown className="prose max-w-none">
+        <div className="comparison-result">
+          <ReactMarkdown>
             {status.comparison}
           </ReactMarkdown>
         </div>
