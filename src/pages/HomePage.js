@@ -264,6 +264,7 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
           <div className="websocket-status-message">
             <p>{status.currentStep}</p>
           </div>
+          <Progress value={progress} />
           <Button
             variant="outline"
             onClick={handleCancel}
