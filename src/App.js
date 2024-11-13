@@ -31,6 +31,12 @@ function App() {
     localStorage.setItem('comparisonHistory', JSON.stringify(updatedHistory));
   };
 
+   // Function to clear all comparisons from history
+   const clearAllComparisons = () => {
+    setHistory([]); 
+    localStorage.removeItem('comparisonHistory'); 
+  };
+
   return (
     <MantineProvider theme={{ fontFamily: 'Roboto, sans-serif' }}>
       <div className="app-layout" style={{ display: 'flex', height: '100vh' }}>
@@ -49,6 +55,7 @@ function App() {
           history={history} 
           onDelete={deleteComparison} 
           onSelect={setSelectedComparison}
+          onClearAll={clearAllComparisons}
         />
       </div>
     </MantineProvider>

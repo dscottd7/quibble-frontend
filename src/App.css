@@ -109,3 +109,14 @@ html, body {
   margin: 10px auto;
   display: block; 
 }
+
+.clear-all-text {
+  color: red;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold; /* Optional: to make the text stand out more */
+}
+
+.clear-all-text:hover {
+  opacity: 0.8; /* Optional: slightly reduce opacity on hover to indicate interactivity */
+}

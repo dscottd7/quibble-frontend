@@ -22,7 +22,9 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
   useEffect(() => {
     if (selectedComparison) {
       setComparison(selectedComparison);
-      setIsRendered(false); // Reset isRendered when a new comparison is loaded
+      setLoading(false);
+      setProgress(100);
+      setIsRendered(true);
     }
   }, [selectedComparison]);
 
@@ -127,10 +129,13 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
 
   // Handle saving the current comparison
   const handleSaveComparison = () => {
+    const titleMatch = comparison.match(/^#\s*(.+)$/m); // Matches "# Title" as the title
+    const title = titleMatch ? titleMatch[1] : `Comparison on ${new Date().toLocaleString()}`;
+
     const comparisonData = {
-      title: preferences.user_preference || `Comparison on ${new Date().toLocaleString()}`,
-      comparison,
-    };
+      title: title,
+      data: comparison,
+  };
     saveComparison(comparisonData);
   };
 
@@ -173,13 +178,13 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
         </div>
       )}
 
+      {/* Error Message Section */}
       {error && (
         <div className="error-message" role="alert">
           {error}
         </div>
       )}
 
-      {/* Error Message Section */}
       {/* Comparison Result Section */}
       {comparison && !error && (
         <div className="comparison-result-box">
