@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { UrlForm } from '../components/UrlForm';
 import { Button } from '@mantine/core';
 import ReactMarkdown from 'react-markdown';
-import { Progress } from '@mantine/core';
+import ProgressBarr from '../components/Progress';
 import ActionButton from '../components/ActionButton';
 
 const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison }) => {
@@ -254,17 +254,16 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
       {/* Loading Progress Bar */}
       {loading && (
         <div style={{ width: '300px', margin: '0 auto' }}>
-          <Progress value={progress} />
+          <ProgressBarr value={progress} />
         </div>
       )}
       
       {/* Websocket status */}
       {status.isProcessing && (
-        <div className="websocket-status">
+        <div className="websocket-status" style={{ width: '140px', margin: '0 auto' }}>
           <div className="websocket-status-message">
             <p>{status.currentStep}</p>
           </div>
-          <Progress value={progress} />
           <Button
             variant="outline"
             onClick={handleCancel}
