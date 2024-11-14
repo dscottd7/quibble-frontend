@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { UrlForm } from '../components/UrlForm';
 import { Button } from '@mantine/core';
 import ReactMarkdown from 'react-markdown';
-import ProgressBarr from '../components/Progress';
 import ActionButton from '../components/ActionButton';
+import { Progress } from '@mantine/core';
 
 const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison }) => {
   const WEBSOCKET_URL = 'ws://localhost:8000/ws/compare';
@@ -16,21 +16,17 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
   
   const [status, setStatus] = useState({
     isProcessing: false,
-    currentStep: '',  // For showing current progress
+    currentStep: '',  // For showing current progress description
+    progressPercetage: 0,  // For showing progress bar % value
     error: '',
     comparison: ''
   });
   
   const [comparison, setComparison] = useState('');
   const [error, setError] = useState('');
-  const [progress, setProgress] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [isRendered, setIsRendered] = useState(false); // Track if markdown is rendered
 
   const handleWebSocketMessage = (event) => {
     const data = JSON.parse(event.data);
-    setLoading(false);
-    setProgress(100);
     
     switch (data.status) {
       case 'progress':
@@ -39,6 +35,21 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
           ...prev,
           currentStep: data.message || 'Processing...'
         }));
+        if (data.message === 'Gathering info...') {
+          setStatus(prev => ({
+            ...prev,
+            progressPercetage: 25
+          }))};
+        if (data.message === 'Analyzing...') {
+          setStatus(prev => ({
+            ...prev,
+            progressPercetage: 50
+          }))};
+        if (data.message === 'Generating comparison...') {
+          setStatus(prev => ({
+            ...prev,
+            progressPercetage: 75
+          }))};
         break;
       
       case 'comparison':
@@ -59,7 +70,6 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
           error: data.message || 'Failed to compare products. Please try again.',
           comparison: ''
         }));
-        setLoading(false);
         closeWebSocket();
         break;
       
@@ -79,37 +89,8 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
   useEffect(() => {
     if (selectedComparison) {
       setComparison(selectedComparison);
-      setIsRendered(false); // Reset isRendered when a new comparison is loaded
     }
   }, [selectedComparison]);
-
-  // Monitor comparison state and set isRendered to true once the comparison is set
-  useEffect(() => {
-    if (comparison && !loading) {
-      const timer = setTimeout(() => {
-        setIsRendered(true);
-      }, 100); // 100ms delay to ensure the markdown content is rendered
-      return () => clearTimeout(timer);
-    }
-  }, [comparison, loading]);
-
-   // Update progress while loading is true
-  useEffect(() => {
-    if (loading) {
-      setProgress(0);
-      const interval = setInterval(() => {
-        setProgress((prevProgress) => {
-          const newProgress = prevProgress + 2;
-          if (newProgress >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return newProgress;
-        });
-      }, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [loading]);
 
   // Handle change events for input fields and preference selection
   const handleChange = (e) => {
@@ -148,8 +129,6 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
     
     setComparison('Comparing...');
     setError('');
-    setLoading(true);
-    setIsRendered(false); // Reset isRendered state before loading
     
     // Close existing WebSocket if any
     closeWebSocket();
@@ -226,9 +205,6 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
     setPreferences(initialPreferencesState);
     setComparison('');
     setError('');
-    setProgress(0);
-    setLoading(false);
-    setIsRendered(false); 
   };
 
   return (
@@ -249,27 +225,24 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
         handleSubmit={handleSubmit}
         isDisabled={status.isProcessing}
       />
-
-
-      {/* Loading Progress Bar */}
-      {loading && (
-        <div style={{ width: '300px', margin: '0 auto' }}>
-          <ProgressBarr value={progress} />
-        </div>
-      )}
       
       {/* Websocket status */}
       {status.isProcessing && (
         <div className="websocket-status" style={{ width: '140px', margin: '0 auto' }}>
           <div className="websocket-status-message">
             <p>{status.currentStep}</p>
+            <p></p>
+            <Progress color="cyan" size="xl" value={status.progressPercetage} striped animated />
+            <p></p>
           </div>
-          <Button
-            variant="outline"
-            onClick={handleCancel}
-          >
-            Cancel Request
-          </Button>
+          <div className="websocket-cancel-button">
+            <Button
+              variant="outline"
+              onClick={handleCancel}
+            >
+              Cancel Request
+            </Button>
+          </div>
         </div>
       )}
 
@@ -286,12 +259,10 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
           <ReactMarkdown>
             {status.comparison}
           </ReactMarkdown>
-          {isRendered && (
-            <div className="actions">
-              <ActionButton label="Save Comparison" onClick={handleSaveComparison} />
-              <ActionButton label="New Comparison" onClick={handleNewComparison} />
-            </div>
-          )}
+          <div className="actions">
+            <ActionButton label="Save Comparison" onClick={handleSaveComparison} />
+            <ActionButton label="New Comparison" onClick={handleNewComparison} />
+          </div>
         </div>
       )}
     </div>
