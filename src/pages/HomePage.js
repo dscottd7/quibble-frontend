@@ -23,37 +23,6 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
     error: '',
     comparison: ''
   });
-
-  // const comparisonData = {
-  //   "brief_comparison_title": "Logitech G PRO X Superlight 2 vs Razer Viper V3 Pro: A Wireless Gaming Mouse Comparison",
-  //   "product1": "Logitech G PRO X Superlight 2 Lightspeed Wireless Gaming Mouse",
-  //   "product2": "Razer Viper V3 Pro Ultra-lightweight Wireless Esports Gaming Mouse",
-  //   "pros_product1": [
-  //     "Slightly cheaper ($139.99 vs $159.99)",
-  //     "Free economy shipping",
-  //     "Top Rated Plus seller status",
-  //     "Simpler estimated delivery schedule",
-  //     "Established brand reputation"
-  //   ],
-  //   "pros_product2": [
-  //     "Slightly newer model",
-  //     "Lighter design (54g)",
-  //     "Specific focus on esports applications",
-  //     "Direct from Razer store",
-  //     "Availability of 3-year enhanced warranty"
-  //   ],
-  //   "cons_product1": [
-  //     "Very limited stock; currently out of stock",
-  //     "Heavier than Razer Viper V3 Pro",
-  //     "Only available from third-party seller (Newegg on eBay)"
-  //   ],
-  //   "cons_product2": [
-  //     "More expensive at $159.99",
-  //     "Longer international shipping potential delays due to customs",
-  //     "Limited to fewer available units and high demand"
-  //   ],
-  //   "comparison_summary": "When choosing between the Logitech G PRO X Superlight 2 and the Razer Viper V3 Pro, consider your priority on features versus cost. The Logitech mouse is a proven and well-regarded device with a reliable seller, free shipping, and a slightly better price point. Meanwhile, the Razer Viper V3 Pro offers an ultra-lightweight design and direct purchase options from Razer, although at a higher cost and potentially longer delivery times. Choose Logitech for a balance of features and price, and Razer if cutting-edge esports performance and brand direct purchase experience are more important to you."
-  // };
   
   const [comparison, setComparison] = useState('');
   const [error, setError] = useState('');
