@@ -88,7 +88,12 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
   // Load selected comparison when a previous one is selected from the hamburger menu
   useEffect(() => {
     if (selectedComparison) {
-      setComparison(selectedComparison);
+      setStatus((prev) => ({
+        ...prev,
+        comparison: selectedComparison,
+        isProcessing: false,
+        error: '',
+      }));
     }
   }, [selectedComparison]);
 
@@ -187,13 +192,16 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
 
   // Handle saving the current comparison
   const handleSaveComparison = () => {
-    const comparisonData = {
-      title: preferences.user_preference || `Comparison on ${new Date().toLocaleString()}`,
-      comparison,
-    };
-    saveComparison(comparisonData);
+    if(status.comparison){
+      const titleMatch = status.comparison.match(/^#\s*(.+)/m);
+      const title = titleMatch ? titleMatch[1].trim() : `Comparison on ${new Date().toLocaleString()}`;  
+    saveComparison({
+      title: title,
+      data: status.comparison // Use status.comparison to ensure you save the latest data.
+    });
+    }
   };
-
+  
   // Handle starting a new comparison by resetting the form
   const handleNewComparison = () => {
     resetForm();
@@ -203,7 +211,13 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
   const resetForm = () => {
     setUrls(initialUrlsState);
     setPreferences(initialPreferencesState);
-    setComparison('');
+    setStatus({
+      isProcessing: false,
+      currentStep: '',
+      progressPercentage: 0,
+      error: '',
+      comparison: ''
+    });
     setError('');
   };
 

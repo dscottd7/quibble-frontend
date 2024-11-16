@@ -48,7 +48,7 @@ function App() {
         <ComparisonHistorySidebar 
           history={history} 
           onDelete={deleteComparison} 
-          onSelect={setSelectedComparison}
+          onSelect={(data) => setSelectedComparison(data)}
         />
       </div>
     </MantineProvider>
