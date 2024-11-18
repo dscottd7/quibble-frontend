@@ -6,7 +6,7 @@ import ActionButton from '../components/ActionButton';
 import { Progress } from '@mantine/core';
 
 const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison }) => {
-  const WEBSOCKET_URL = 'ws://localhost:8000/ws/compare';
+  const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL || 'ws://localhost:8000/ws/compare';
   const wsRef = useRef(null);
   
   const initialUrlsState = { url1: '', url2: '' };
