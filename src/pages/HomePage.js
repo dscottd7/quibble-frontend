@@ -7,7 +7,7 @@ import { Progress } from '@mantine/core';
 import ComparisonDisplay from '../components/ComparisonDisplay';
 
 const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison }) => {
-  const STRUCTURED_WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL || 'ws://localhost:8000/ws/compare/structured';
+  const STRUCTURED_WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL_STRUCTURED || 'ws://localhost:8000/ws/compare/structured';
 
   const wsRef = useRef(null);
   
