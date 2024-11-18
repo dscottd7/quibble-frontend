@@ -13,6 +13,7 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
   const initialPreferencesState = { selected_categories: [], user_preference: '' };
   const [urls, setUrls] = useState(initialUrlsState);
   const [preferences, setPreferences] = useState(initialPreferencesState);
+  const [comparisonUrls, setComparisonUrls] = useState(null); // To store URLs used in the comparison
   
   const [status, setStatus] = useState({
     isProcessing: false,
@@ -21,13 +22,10 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
     error: '',
     comparison: ''
   });
-  
-  const [comparison, setComparison] = useState('');
-  const [error, setError] = useState('');
 
-  const handleWebSocketMessage = (event) => {
+  function handleWebSocketMessage(event) {
     const data = JSON.parse(event.data);
-    
+
     switch (data.status) {
       case 'progress':
         // Update progress message
@@ -39,19 +37,22 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
           setStatus(prev => ({
             ...prev,
             progressPercetage: 25
-          }))};
+          }));
+        };
         if (data.message === 'Analyzing...') {
           setStatus(prev => ({
             ...prev,
             progressPercetage: 50
-          }))};
+          }));
+        };
         if (data.message === 'Generating comparison...') {
           setStatus(prev => ({
             ...prev,
             progressPercetage: 75
-          }))};
+          }));
+        };
         break;
-      
+
       case 'comparison':
         // Final comparison received
         setStatus(prev => ({
@@ -60,9 +61,10 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
           error: '',
           comparison: data.data
         }));
+        setComparisonUrls(urls); // Store the URLs used for the comparison
         closeWebSocket();
         break;
-      
+
       case 'error':
         setStatus(prev => ({
           isProcessing: false,
@@ -72,11 +74,11 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
         }));
         closeWebSocket();
         break;
-      
+
       default:
         console.log('Unknown message type:', data);
     }
-  };
+  }
 
   const closeWebSocket = () => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
@@ -85,7 +87,7 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
     }
   };
 
-  // Load selected comparison when a previous one is selected from the hamburger menu
+  // Load selected comparison when a previous one is selected from the sidebar
   useEffect(() => {
     if (selectedComparison) {
       setStatus((prev) => ({
@@ -94,6 +96,14 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
         isProcessing: false,
         error: '',
       }));
+      setComparisonUrls(selectedComparison.urls); // Load the URLs for the selected comparison
+      
+      if (selectedComparison.title) {
+        setStatus((prev) => ({
+          ...prev,
+          title: selectedComparison.title,
+        }));
+      }
     }
   }, [selectedComparison]);
 
@@ -131,9 +141,6 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
       error: '',
       comparison: ''
     });
-    
-    setComparison('Comparing...');
-    setError('');
     
     // Close existing WebSocket if any
     closeWebSocket();
@@ -197,7 +204,8 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
       const title = titleMatch ? titleMatch[1].trim() : `Comparison on ${new Date().toLocaleString()}`;  
     saveComparison({
       title: title,
-      data: status.comparison // Use status.comparison to ensure you save the latest data.
+      data: status.comparison, // Use status.comparison to ensure you save the latest data.
+      urls: { ...urls },// Save the URLs used during comparison
     });
     }
   };
@@ -218,7 +226,6 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
       error: '',
       comparison: ''
     });
-    setError('');
   };
 
   return (
@@ -268,16 +275,42 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
       )}
 
       {/* Comparison Result Section */}
-      {status.comparison && !error && (
+      {status.comparison && !status.error && (
         <div className="comparison-result-box">
+           {/* Render the comparison content */}
           <ReactMarkdown>
             {status.comparison}
           </ReactMarkdown>
-          <div className="actions">
-            <ActionButton label="Save Comparison" onClick={handleSaveComparison} />
-            <ActionButton label="New Comparison" onClick={handleNewComparison} />
-          </div>
+
+          {/* Display the URLs used for this comparison */}
+          {comparisonUrls && (
+        <div className="comparison-urls">
+          <p>You can access the product URLs below:</p>
+          {comparisonUrls.url1 && (
+            <div className="product-link">
+              <span>Product 1: </span>
+              <a href={comparisonUrls.url1} target="_blank" rel="noopener noreferrer">
+                Click here to view Product 1
+              </a>
+            </div>
+          )}
+          <br />
+          {comparisonUrls.url2 && (
+            <div className="product-link">
+              <span>Product 2: </span>
+              <a href={comparisonUrls.url2} target="_blank" rel="noopener noreferrer">
+                Click here to view Product 2
+              </a>
+            </div>
+          )}
         </div>
+      )}
+        {/* Action Button */}
+        <div className="actions">
+          <ActionButton label="Save Comparison" onClick={handleSaveComparison} />
+          <ActionButton label="New Comparison" onClick={handleNewComparison} />
+        </div>
+      </div>
       )}
     </div>
   );
