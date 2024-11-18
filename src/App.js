@@ -1,19 +1,63 @@
 import './App.css';
 import '@mantine/core/styles.css';
 import { Header } from './pages/Header';
-import MainContainer from './pages/MainContainer';
-import { MantineProvider } from '@mantine/core';
+// import MainContainer from './pages/MainContainer';
+import ComparisonHistoryManager from './hooks/ComparisonHistoryManager';
+import { createTheme, MantineProvider, rem, Container } from '@mantine/core';
+import HomePage from './pages/HomePage';
+import classes from './App.css';
+import cx from 'clsx';
+
+
+const theme = createTheme({
+  components: {
+    Container: Container.extend({
+      styles: {
+        root: {
+          overflowY: 'auto',
+          maxHeight: '100vh',
+        },
+      },
+      classNames: (_, { size }) => ({
+        root: cx({ [classes.responsiveContainer]: size === 'responsive' ? 'responsive-container' : ''}),
+      }),
+    }),
+  },
+  headings: {
+    fontFamily: 'Roboto, sans-serif',
+    sizes: {
+      h1: { fontSize: rem(36) },
+      h2: { fontSize: rem(30) },
+    },
+  },
+});
 
 function App() {
+  const {
+    history,
+    saveComparison,
+    deleteComparison,
+    selectedComparison,
+    setSelectedComparison
+  } = ComparisonHistoryManager();
+  
   return (
-    <MantineProvider theme={{ fontFamily: 'Roboto, sans-serif' }}>
-      <div className="app-layout" style={{ display: 'flex', height: '100vh' }}>
-        {/* Main Content Area */}
-        <div className="main-content" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+    <MantineProvider theme={theme}>
+      <Container 
+        size="lg"
+        styles={{
+          maxWidth: '1200px',
+      }}
+      >
           <Header />
-          <MainContainer />
-        </div>
-      </div>
+          <HomePage 
+            saveComparison={saveComparison}
+            setSelectedComparison={setSelectedComparison}
+            selectedComparison={selectedComparison}
+            history={history}
+            deleteComparison={deleteComparison}
+          />
+      </Container>
     </MantineProvider>
   );
 }

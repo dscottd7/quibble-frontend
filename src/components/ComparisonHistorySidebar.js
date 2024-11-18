@@ -1,68 +1,47 @@
-/* import React from 'react';
-import PropTypes from 'prop-types';
-
-const ComparisonHistorySidebar = ({ history, onDelete, onSelect }) => {
-  return (
-    <div className="comparison-history-sidebar" style={{ width: '300px', background: '#f4f4f4', padding: '10px', overflowY: 'auto' }}>
-      <h3>Previous Comparisons</h3>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {history.map((item, index) => (
-          <li key={index} style={{ marginBottom: '10px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <button 
-                onClick={() => onSelect(item.data)} 
-                style={{ flex: 1, marginRight: '5px', textAlign: 'left' }}>
-                {item.title || `Comparison ${index + 1}`}
-              </button>
-              <button 
-                onClick={() => onDelete(index)} 
-                style={{ background: 'red', color: 'white', border: 'none', padding: '5px' }}>
-                ✕
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-ComparisonHistorySidebar.propTypes = {
-  history: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      data: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onSelect: PropTypes.func.isRequired,
-};
-
-export default ComparisonHistorySidebar;
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, Text } from '@mantine/core';
+import { Box, CloseButton, Text, Title, Card, Grid, Stack, Flex } from '@mantine/core';
 import '../styles/ComparisonHistorySidebar.css';
 
 const ComparisonHistorySidebar = ({ history, onDelete, onSelect }) => {
   return (
-    <div className="comparison-history-sidebar">
-      <Text weight={500} size="lg" mb="md" className="comparison-header">
+    <Box>
+      <Title order={3}>
         Previous Comparisons
-      </Text>
-      <div className="comparison-list">
+      </Title>
+      <Stack
+        align="stretch"
+        justify="center"
+        gap="md"
+      >
         {history.map((item, index) => (
-          <Box key={index} className="comparison-item-box">
-             
-            {/* Display the comparison title */}
-            <Text
-              className="comparison-title"
-              onClick={() => onSelect(item.data)}
-            >
-              {item.title || `Comparison ${index + 1}`}
-            </Text>
+          <Card shadow="sm" padding="lg" radius="md" withBorder key={index} sx={{ position: 'relative' }}>
+            <Grid>
+              <Grid.Col span={10}>
+                <Text
+                  className="comparison-title"
+                  onClick={() => onSelect(item.data)}
+                  fw={500} // font-weight: 500
+                  sx={{ fontSize: '16px', marginBottom: '10px' }}
+                >
+                  {item.title || `Comparison ${index + 1}`}
+                </Text>
+              </Grid.Col>
+              <Grid.Col span={2}>
+                <Flex
+                  gap="md"
+                  justify="flex-end"
+                  align="flex-start"
+                  direction="row"
+                  wrap="wrap"
+                >
+                  <CloseButton 
+                    onClick={() => onDelete(index)} 
+                    sx={{ position: 'absolute', top: 10, right: 10 }} 
+                  />
+                </Flex>
+              </Grid.Col>
+            </Grid>
 
             {/* Display the URLs used for the comparison */}
             {item.urls && (
@@ -83,22 +62,10 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect }) => {
                 )}
               </div>
             )}
-            
-             {/* Delete button */}
-            <Button
-              color="red"
-              variant="filled"
-              onClick={() => onDelete(index)}
-              size="xs"
-              className="delete-button"
-            >
-              ✕
-            </Button>
-           
-          </Box>
+          </Card>
         ))}
-      </div>
-    </div>
+      </Stack>
+    </Box>
   );
 };
 

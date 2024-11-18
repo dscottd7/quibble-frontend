@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { UrlForm } from '../components/UrlForm';
-import { Button } from '@mantine/core';
 import ReactMarkdown from 'react-markdown';
-import ActionButton from '../components/ActionButton';
-import { Progress } from '@mantine/core';
+import { Progress, Grid, Button, Text, Title, Group, Box, Stack, Container, Space } from '@mantine/core';
+import ComparisonHistorySidebar from '../components/ComparisonHistorySidebar';
 
-const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison }) => {
+const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, history, deleteComparison }) => {
   const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL || 'ws://localhost:8000/ws/compare';
   const wsRef = useRef(null);
   
@@ -229,90 +228,108 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
   };
 
   return (
-    <div className="main-content">
-      {/* Description Section */}
-      <div className="description">
-        <h2>Compare any two products!</h2>
-        <p>
-          Paste the URL of any two products in the fields below, and click COMPARE for a comparison
-        </p>
-      </div>
-
-      {/* URL Form to Input Product URLs and Preferences */}
-      <UrlForm
-        urls={urls}
-        preferences={preferences}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        isDisabled={status.isProcessing}
-      />
-      
-      {/* Websocket status */}
-      {status.isProcessing && (
-        <div className="websocket-status" style={{ width: '140px', margin: '0 auto' }}>
-          <div className="websocket-status-message">
-            <p>{status.currentStep}</p>
-            <p></p>
-            <Progress color="cyan" size="xl" value={status.progressPercetage} striped animated />
-            <p></p>
-          </div>
-          <div className="websocket-cancel-button">
-            <Button
-              variant="outline"
-              onClick={handleCancel}
-            >
-              Cancel Request
-            </Button>
-          </div>
-        </div>
-      )}
-
-      {/* Error message */}
-      {status.error && (
-        <div className="error-message" role="alert">
-          {status.error}
-        </div>
-      )}
-
-      {/* Comparison Result Section */}
-      {status.comparison && !status.error && (
-        <div className="comparison-result-box">
-           {/* Render the comparison content */}
-          <ReactMarkdown>
-            {status.comparison}
-          </ReactMarkdown>
-
-          {/* Display the URLs used for this comparison */}
-          {comparisonUrls && (
-        <div className="comparison-urls">
-          <p>You can access the product URLs below:</p>
-          {comparisonUrls.url1 && (
-            <div className="product-link">
-              <span>Product 1: </span>
-              <a href={comparisonUrls.url1} target="_blank" rel="noopener noreferrer">
-                Click here to view Product 1
-              </a>
-            </div>
+    <Container
+      size="lg"
+      styles={{
+        maxWidth: '1200px',
+      }}
+    >
+      <Grid gutter={{ base: 5, xs: 'md', md: 'xl', xl: 50 }}>
+        <Grid.Col span={{ base: 12, md: 8 }}>
+          <Title order={2}>Compare any two products!</Title>
+          <Text h="xxl">
+            Paste the URL of any two products in the fields below, and click COMPARE for a comparison
+          </Text>
+          <Space h="md" />
+          <UrlForm
+            urls={urls}
+            preferences={preferences}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            isDisabled={status.isProcessing}
+          />
+          <Space h="lg" />
+    
+          {/* WebSocket status */}
+          {status.isProcessing && (
+            <Box>
+              <Space h="md" />
+              <Stack
+                align="stretch"
+                justify="center"
+                gap="md"
+              >
+                <Text c="blue" size="sm">{status.currentStep}</Text>
+                <Progress size="xl" value={status.progressPercetage} striped animated />
+                <Button variant="outline" onClick={handleCancel}>
+                  Cancel Request
+                </Button>
+              </Stack>
+            </Box>
           )}
-          <br />
-          {comparisonUrls.url2 && (
-            <div className="product-link">
-              <span>Product 2: </span>
-              <a href={comparisonUrls.url2} target="_blank" rel="noopener noreferrer">
-                Click here to view Product 2
-              </a>
-            </div>
+    
+          {/* Error message */}
+          {status.error && (
+            <Box>
+              <Text color="red">{status.error}</Text>
+            </Box>
           )}
-        </div>
-      )}
-        {/* Action Button */}
-        <div className="actions">
-          <ActionButton label="Save Comparison" onClick={handleSaveComparison} />
-          <ActionButton label="New Comparison" onClick={handleNewComparison} />
-        </div>
-      </div>
-      )}
-    </div>
+    
+          {/* Comparison Result Section */}
+          {status.comparison && !status.error && (
+            <Box>
+              {/* Save Comparison / New Comparison Buttons */}
+              <Button.Group>
+                <Button variant="subtle" size="xs" onClick={handleSaveComparison}>
+                  Save Comparison
+                </Button>
+                <Button variant="subtle" size="xs" onClick={handleNewComparison}>
+                  New Comparison
+                </Button>
+              </Button.Group>
+              {/* Comparison Content */}
+              <ReactMarkdown>{status.comparison}</ReactMarkdown>
+              <Group>
+                {/* Comparison URLs */}
+                {comparisonUrls && (
+                  <Box>
+                    <Text>You can access the product URLs below:</Text>
+                    {comparisonUrls.url1 && (
+                      <Box>
+                        <Text>
+                          Product 1: &nbsp;
+                          <a href={comparisonUrls.url1} target="_blank" rel="noopener noreferrer">
+                            Click here to view Product 1
+                          </a>
+                        </Text>
+                      </Box>
+                    )}
+                    {comparisonUrls.url2 && (
+                      <Box>
+                        <Text>Product 2: &nbsp;
+                          <a href={comparisonUrls.url2} target="_blank" rel="noopener noreferrer">
+                            Click here to view Product 2
+                          </a>
+                        </Text>
+                      </Box>
+                    )}
+                  </Box>
+                )}
+                
+              </Group>
+            </Box>
+          )}
+        </Grid.Col>
+    
+        <Grid.Col span={{ base: 12, md: 4 }}>
+          <ComparisonHistorySidebar
+            history={history}
+            onDelete={deleteComparison}
+            onSelect={setSelectedComparison}
+          />
+        </Grid.Col>
+      </Grid>
+    </Container>
   );
 };
 

@@ -1,5 +1,5 @@
 import {React, useState } from 'react';
-import { TextInput, Button, Textarea, Switch, Group} from '@mantine/core';
+import { TextInput, Button, Textarea, Switch, Group, Box, Space } from '@mantine/core';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import classes from '../styles/FormMenu.module.css';
 
@@ -8,9 +8,10 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
   const [open, setOpen] = useState(false);
 
   return (
-    <div className={classes.form_container}>
+    // <div className={classes.form_container}>
+    <Box>
       <form onSubmit={handleSubmit}>
-        <div >
+        <Box >
           <TextInput 
             type='url'
             id='url1'
@@ -31,15 +32,15 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
             required
             className={classes.url_input}
           />
-        </div>
+        </Box>
 
         <Button onClick={() => setOpen(!open)} variant='transparent' color="black" size='md'>
           {open ? <label className={classes.options_label}>Hide comparison options</label> : <label className={classes.options_label}>More comparison options</label>}
           {open ? <IconChevronUp /> : <IconChevronDown />}
         </Button>
         { open && 
-          (<div className={classes.options}>
-
+          (<Box>
+            <Box>
             <Switch.Group
               value={preferences.selected_categories}
               onChange={handleChange}
@@ -53,8 +54,8 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
                 <Switch value='Estimated Delivery' label='Delivery' />
               </Group>
             </Switch.Group>
-
-            <div>
+            </Box>
+            <Box>
               <Textarea
                 name="user_preference"
                 mt="md"
@@ -64,18 +65,18 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
                 autosize
                 minRows={4}
               />
-            </div>
-        </div> 
+            </Box>
+            <Space h="md" />
+        </Box> 
       )}
-
-        <br/>
-        <button type="submit" className={classes.submit_button}>
-          Compare
-        </button>
+        <Box>
+          <Button fullWidth type="submit">
+            Compare
+          </Button>
+        </Box>
       </form>
 
-        
-
-    </div>
+    </Box>
+    // </div>
   );
 };
