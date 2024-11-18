@@ -234,7 +234,7 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
         maxWidth: '1200px',
       }}
     >
-      <Grid gutter={{ base: 5, xs: 'md', md: 'xl', xl: 50 }}>
+      <Grid gutter={{ base: 10, xs: 'md', md: 'xl', xl: 60 }}>
         <Grid.Col span={{ base: 12, md: 8 }}>
           <Title order={2}>Compare any two products!</Title>
           <Text h="xxl">
