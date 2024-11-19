@@ -27,7 +27,7 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
             required
             className={classes.url_input}
             rightSection={
-              <ActionIcon onClick={() => handleClearUrl('url1')}>
+              <ActionIcon onClick={() => handleClearUrl('url1')} variant="transparent" aria-label="Settings" >
                 <IconX size={16} />
               </ActionIcon>
             }
@@ -42,7 +42,7 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
             required
             className={classes.url_input}
             rightSection={
-              <ActionIcon onClick={() => handleClearUrl('url2')}>
+              <ActionIcon onClick={() => handleClearUrl('url2')} variant="transparent" aria-label="Settings">
                 <IconX size={16} />
               </ActionIcon>
             }

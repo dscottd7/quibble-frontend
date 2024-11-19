@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, CloseButton, Text, Title, Card, Grid, Stack, Flex, Button } from '@mantine/core';
+import { Box, CloseButton, Text, Title, Card, Grid, Stack, Flex, Button, Space } from '@mantine/core';
 import '../styles/ComparisonHistorySidebar.css';
 
 const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) => {
@@ -8,7 +8,7 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) =
     <Box>
       <Flex align="center" justify="space-between">
         <Title order={3}>
-          Previous Comparisons
+          Saved Comparisons
         </Title>
         {history.length > 0 && (
           <Button 
@@ -21,9 +21,8 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) =
             Clear All
           </Button>
         )}
-
       </Flex>
-      
+      <Space h="md" />
       <Stack
         align="stretch"
         justify="center"
