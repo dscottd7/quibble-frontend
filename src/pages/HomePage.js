@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { UrlForm } from '../components/UrlForm';
 import { Progress, Grid, Button, Text, Title, Group, Box, Stack, Container, Space } from '@mantine/core';
 //import ReactMarkdown from 'react-markdown';
-import ActionButton from '../components/ActionButton';
+// import ActionButton from '../components/ActionButton';
 import ComparisonDisplay from '../components/ComparisonDisplay';
 import ComparisonHistorySidebar from '../components/ComparisonHistorySidebar';
 
@@ -201,8 +201,9 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
   // Handle saving the current comparison
   const handleSaveComparison = () => {
     if(status.comparison){
-      const titleMatch = status.comparison.match(/^#\s*(.+)/m);
-      const title = titleMatch ? titleMatch[1].trim() : `Comparison on ${new Date().toLocaleString()}`;  
+      // const titleMatch = status.comparison.match(/^#\s*(.+)/m);
+      // const title = titleMatch ? titleMatch[1].trim() : `Comparison on ${new Date().toLocaleString()}`;  
+      const title = status.comparison.brief_comparison_title || `Comparison on ${new Date().toLocaleString()}`;
     saveComparison({
       title: title,
       data: status.comparison, // Use status.comparison to ensure you save the latest data.
