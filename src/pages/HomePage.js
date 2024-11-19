@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { UrlForm } from '../components/UrlForm';
-import ReactMarkdown from 'react-markdown';
 import { Progress, Grid, Button, Text, Title, Group, Box, Stack, Container, Space } from '@mantine/core';
+//import ReactMarkdown from 'react-markdown';
+import ActionButton from '../components/ActionButton';
+import ComparisonDisplay from '../components/ComparisonDisplay';
 import ComparisonHistorySidebar from '../components/ComparisonHistorySidebar';
 
 const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, history, deleteComparison, clearAllComparisons }) => {
-  const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL || 'ws://localhost:8000/ws/compare';
+  const STRUCTURED_WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL_STRUCTURED || 'ws://localhost:8000/ws/compare/structured';
   const wsRef = useRef(null);
   
   const initialUrlsState = { url1: '', url2: '' };
@@ -145,7 +147,7 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
     closeWebSocket();
 
     // Create new WebSocket connection
-    const ws = new WebSocket(WEBSOCKET_URL);
+    const ws = new WebSocket(STRUCTURED_WEBSOCKET_URL);
     wsRef.current = ws;
 
     ws.onopen = () => {
@@ -287,9 +289,8 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
                   New Comparison
                 </Button>
               </Group>
-
               {/* Comparison Content */}
-              <ReactMarkdown>{status.comparison}</ReactMarkdown>
+              <ComparisonDisplay comparisonData={status.comparison}/>
               <Group>
                 {/* Comparison URLs */}
                 {comparisonUrls && (
