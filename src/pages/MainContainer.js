@@ -9,6 +9,7 @@ const MainContainer = () => {
     history,
     saveComparison,
     deleteComparison,
+    clearAllComparisons,
     selectedComparison,
     setSelectedComparison
   } = ComparisonHistoryManager();
@@ -29,6 +30,7 @@ const MainContainer = () => {
         history={history}
         onDelete={deleteComparison}
         onSelect={setSelectedComparison}
+        onClearAll={clearAllComparisons} 
       />
     </Box>
   );

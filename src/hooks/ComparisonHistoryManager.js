@@ -32,10 +32,17 @@ const ComparisonHistoryManager = () => {
     localStorage.setItem('comparisonHistory', JSON.stringify(updatedHistory));
   };
 
+   // Function to clear all comparisons from history
+   const clearAllComparisons = () => {
+    setHistory([]);
+    localStorage.removeItem('comparisonHistory');
+  };
+
   return {
     history,
     selectedComparison,
     setSelectedComparison,
+    clearAllComparisons,
     saveComparison,
     deleteComparison,
   };

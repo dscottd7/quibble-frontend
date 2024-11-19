@@ -1,11 +1,16 @@
 import {React, useState } from 'react';
-import { TextInput, Button, Textarea, Switch, Group, Box, Space } from '@mantine/core';
-import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import { TextInput, Button, Textarea, Switch, Group, Box, Space, ActionIcon } from '@mantine/core';
+import { IconChevronDown, IconChevronUp, IconX } from '@tabler/icons-react';
 import classes from '../styles/FormMenu.module.css';
 
 export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading, progress}) => {
   
   const [open, setOpen] = useState(false);
+
+  // Added action to clear a unwanted or wrong user url
+  const handleClearUrl = (urlKey) => {
+    handleChange({ target: { name: urlKey, value: '' } });
+  };
 
   return (
     // <div className={classes.form_container}>
@@ -21,6 +26,11 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
             placeholder='Product 1 URL'
             required
             className={classes.url_input}
+            rightSection={
+              <ActionIcon onClick={() => handleClearUrl('url1')}>
+                <IconX size={16} />
+              </ActionIcon>
+            }
           />
           <TextInput 
             type='url'
@@ -31,6 +41,11 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
             placeholder='Product 2 URL'
             required
             className={classes.url_input}
+            rightSection={
+              <ActionIcon onClick={() => handleClearUrl('url2')}>
+                <IconX size={16} />
+              </ActionIcon>
+            }
           />
         </Box>
 

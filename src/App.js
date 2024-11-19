@@ -15,6 +15,7 @@ const theme = createTheme({
       styles: {
         root: {
           overflowY: 'auto',
+          overflowX: 'hidden', 
           maxHeight: '100vh',
         },
       },
@@ -37,6 +38,7 @@ function App() {
     history,
     saveComparison,
     deleteComparison,
+    clearAllComparisons,
     selectedComparison,
     setSelectedComparison
   } = ComparisonHistoryManager();
@@ -56,6 +58,7 @@ function App() {
             selectedComparison={selectedComparison}
             history={history}
             deleteComparison={deleteComparison}
+            clearAllComparisons={clearAllComparisons}
           />
       </Container>
     </MantineProvider>

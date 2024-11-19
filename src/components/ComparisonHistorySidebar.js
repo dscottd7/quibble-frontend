@@ -1,14 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, CloseButton, Text, Title, Card, Grid, Stack, Flex } from '@mantine/core';
+import { Box, CloseButton, Text, Title, Card, Grid, Stack, Flex, Button } from '@mantine/core';
 import '../styles/ComparisonHistorySidebar.css';
 
-const ComparisonHistorySidebar = ({ history, onDelete, onSelect }) => {
+const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) => {
   return (
     <Box>
-      <Title order={3}>
-        Previous Comparisons
-      </Title>
+      <Flex align="center" justify="space-between">
+        <Title order={3}>
+          Previous Comparisons
+        </Title>
+        {history.length > 0 && (
+          <Button 
+            variant="subtle" 
+            color="red" 
+            size="xs" 
+            onClick={onClearAll} 
+            sx={{ cursor: 'pointer' }}
+          >
+            Clear All
+          </Button>
+        )}
+
+      </Flex>
+      
       <Stack
         align="stretch"
         justify="center"
@@ -82,6 +97,7 @@ ComparisonHistorySidebar.propTypes = {
   ).isRequired,
   onDelete: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
+  onClearAll: PropTypes.func.isRequired,
 };
 
 
