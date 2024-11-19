@@ -1,111 +1,12 @@
-/* .App {
-  text-align: center;
-}
+/* Mantine styles */
+.responsiveContainer {
+  max-width: 300px;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  @media (min-width: em(400px)) {
+    max-width: 400px;
   }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  @media (min-width: em(600px)) {
+    max-width: 600px;
   }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
-/* Set the body and html to prevent overflow scrolling */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden; 
-}
-
-.app-layout {
-  display: flex;
-  height: 100vh; 
-  overflow: hidden; /* No scroll for app layout */
-}
-
-.navbar {
-  display: flex;
-  justify-content: center; /* Center the logo */
-  align-items: center;
-  padding: 15px 20px;
-  background-color: #237fb7;
-  color: white;
-}
-
-.logo {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-.main-content {
-  flex: 1; 
-  padding: 10px; 
-  overflow-y: auto; 
-}
-
-.description {
-  max-width: 800px; 
-  margin: 0 auto 10px auto; 
-  text-align: center; 
-}
-
-.comparison-history-sidebar {
-  width: 300px; 
-  background: #f4f4f4; 
-  padding: 10px; 
-  overflow-y: hidden; 
-  height: 100vh;
-  box-sizing: border-box; 
-}
-
-.comparison-result-box {
-    background-color: #ffffff; 
-    padding: 20px; 
-    border: 1px solid #dcdcdc; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    margin: 20px 0; 
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto; 
-}
-
-
-.submit_button {
-  background-color: #237fb7;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  margin: 10px auto;
-  display: block; 
 }
