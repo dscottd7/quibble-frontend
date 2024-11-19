@@ -279,24 +279,14 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
           {status.comparison && !status.error && (
             <Box>
               {/* Save Comparison / New Comparison Buttons */}
-              {/* <Button.Group position="apart" style={{ width: '100%' }}>
+              <Group justify="space-between">
                 <Button variant="subtle" size="xs" onClick={handleSaveComparison} style={{ alignSelf: 'flex-start' }}>
                   Save Comparison
                 </Button>
                 <Button variant="subtle" size="xs" onClick={handleNewComparison} style={{ alignSelf: 'flex-end' }}>
                   New Comparison
                 </Button>
-              </Button.Group> */}
-
-              {/* The button group is modified to be positioned away rather then side by side*/}
-              <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                <Button variant="subtle" size="xs" onClick={handleNewComparison}>
-                    New Comparison
-                </Button>
-                <Button variant="subtle" size="xs" onClick={handleSaveComparison}>
-                  Save Comparison
-                </Button>
-              </div>
+              </Group>
 
               {/* Comparison Content */}
               <ReactMarkdown>{status.comparison}</ReactMarkdown>
