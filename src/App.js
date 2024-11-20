@@ -5,8 +5,11 @@ import { Header } from './pages/Header';
 import ComparisonHistoryManager from './hooks/ComparisonHistoryManager';
 import { createTheme, MantineProvider, rem, Container } from '@mantine/core';
 import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
 import classes from './App.css';
 import cx from 'clsx';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 const theme = createTheme({
@@ -42,26 +45,40 @@ function App() {
     selectedComparison,
     setSelectedComparison
   } = ComparisonHistoryManager();
-  
+
   return (
     <MantineProvider theme={theme}>
-      <Container 
-        size="lg"
-        styles={{
-          maxWidth: '1200px',
-      }}
-      >
-          <Header />
-          <HomePage 
-            saveComparison={saveComparison}
-            setSelectedComparison={setSelectedComparison}
-            selectedComparison={selectedComparison}
-            history={history}
-            deleteComparison={deleteComparison}
-            clearAllComparisons={clearAllComparisons}
-          />
-      </Container>
+      <Router>
+        <Header />
+        <Container
+          size="lg"
+          styles={{
+            maxWidth: '1200px',
+          }}
+        >
+          <Routes>
+            {/* Default route for HomePage */}
+            <Route
+              path="/"
+              element={
+                <HomePage
+                  saveComparison={saveComparison}
+                  setSelectedComparison={setSelectedComparison}
+                  selectedComparison={selectedComparison}
+                  history={history}
+                  deleteComparison={deleteComparison}
+                  clearAllComparisons={clearAllComparisons}
+                />
+              }
+            />
+            
+            {/* Route for AboutPage */}
+            <Route path="/about" element={<AboutPage />} />
+          </Routes>
+        </Container>
+      </Router>
     </MantineProvider>
   );
 }
+
 export default App;

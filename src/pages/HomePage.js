@@ -241,6 +241,9 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
         <Grid.Col span={{ base: 12, md: 8 }}>
           <Title order={2}>Compare any two products!</Title>
           <Text h="xxl">
+            Backend target: {STRUCTURED_WEBSOCKET_URL}
+          </Text>
+          <Text h="xxl">
             Paste the URL of any two products in the fields below, and click COMPARE for a comparison
           </Text>
           <Space h="md" />
