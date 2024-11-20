@@ -1,58 +1,67 @@
 import './App.css';
 import '@mantine/core/styles.css';
 import { Header } from './pages/Header';
+// import MainContainer from './pages/MainContainer';
+import ComparisonHistoryManager from './hooks/ComparisonHistoryManager';
+import { createTheme, MantineProvider, rem, Container } from '@mantine/core';
 import HomePage from './pages/HomePage';
-import ComparisonHistorySidebar from './components/ComparisonHistorySidebar';
-import { MantineProvider } from '@mantine/core';
-import { useState, useEffect } from 'react';
+import classes from './App.css';
+import cx from 'clsx';
+
+
+const theme = createTheme({
+  components: {
+    Container: Container.extend({
+      styles: {
+        root: {
+          overflowY: 'auto',
+          overflowX: 'hidden', 
+          maxHeight: '100vh',
+        },
+      },
+      classNames: (_, { size }) => ({
+        root: cx({ [classes.responsiveContainer]: size === 'responsive' ? 'responsive-container' : ''}),
+      }),
+    }),
+  },
+  headings: {
+    fontFamily: 'Roboto, sans-serif',
+    sizes: {
+      h1: { fontSize: rem(36) },
+      h2: { fontSize: rem(30) },
+    },
+  },
+});
 
 function App() {
-  // State for managing comparison history
-  const [history, setHistory] = useState([]);
-  const [selectedComparison, setSelectedComparison] = useState('');
-
-  useEffect(() => {
-    // Load history from localStorage on mount
-    const savedComparisons = JSON.parse(localStorage.getItem('comparisonHistory')) || [];
-    setHistory(savedComparisons);
-  }, []);
-
-  // Function to save a comparison to history
-  const saveComparison = (comparisonData) => {
-    const updatedHistory = [...history, comparisonData];
-    setHistory(updatedHistory);
-    localStorage.setItem('comparisonHistory', JSON.stringify(updatedHistory));
-  };
-
-  // Function to delete a comparison from history
-  const deleteComparison = (index) => {
-    const updatedHistory = history.filter((_, idx) => idx !== index);
-    setHistory(updatedHistory);
-    localStorage.setItem('comparisonHistory', JSON.stringify(updatedHistory));
-  };
-
+  const {
+    history,
+    saveComparison,
+    deleteComparison,
+    clearAllComparisons,
+    selectedComparison,
+    setSelectedComparison
+  } = ComparisonHistoryManager();
+  
   return (
-    <MantineProvider theme={{ fontFamily: 'Roboto, sans-serif' }}>
-      <div className="app-layout" style={{ display: 'flex', height: '100vh' }}>
-        {/* Main Content Area */}
-        <div className="main-content" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+    <MantineProvider theme={theme}>
+      <Container 
+        size="lg"
+        styles={{
+          maxWidth: '1200px',
+      }}
+      >
           <Header />
           <HomePage 
-            saveComparison={saveComparison} 
+            saveComparison={saveComparison}
             setSelectedComparison={setSelectedComparison}
             selectedComparison={selectedComparison}
+            history={history}
+            deleteComparison={deleteComparison}
+            clearAllComparisons={clearAllComparisons}
           />
-        </div>
-
-        {/* Sidebar for Comparison History */}
-        <ComparisonHistorySidebar 
-          history={history} 
-          onDelete={deleteComparison} 
-          onSelect={setSelectedComparison}
-        />
-      </div>
+      </Container>
     </MantineProvider>
   );
 }
-
 export default App;
