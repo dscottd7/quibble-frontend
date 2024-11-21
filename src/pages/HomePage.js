@@ -235,7 +235,7 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
           <Grid.Col span={{ base: 12, md: 8 }}>
             <Title mb="20px" order={2}>Compare any two products!</Title>
             <Text mb="10px">
-              Paste the URL of any two products in the fields below, and click COMPARE for a comparison
+              Paste the URL of any two products in the fields below, and click COMPARE
             </Text>
             <Space h="md" />
             <UrlForm
@@ -268,7 +268,7 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
             {/* Error message */}
             {status.error && (
               <Box>
-                <Text color="red">{status.error}</Text>
+                <Text c="red">{status.error}</Text>
               </Box>
             )}
       
@@ -290,24 +290,25 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
                 <Group>
                   {/* Comparison URLs */}
                   {comparisonUrls && (
-                    <Box>
-                      <Text>You can access the product URLs below:</Text>
+                    <Box mt="20px">
+                      <Title order={4}>Product Links:</Title>
                       {comparisonUrls.url1 && (
-                        <Box>
-                          <Text>
-                            Product 1: &nbsp;
-                            <a href={comparisonUrls.url1} target="_blank" rel="noopener noreferrer">
-                              Click here to view Product 1
-                            </a>
+                        <Box mt="10px">
+                          <Text 
+                            component="a"
+                            href={comparisonUrls.url1}
+                            target="_blank">
+                            {String(comparisonUrls.url1)}
                           </Text>
                         </Box>
                       )}
                       {comparisonUrls.url2 && (
-                        <Box>
-                          <Text>Product 2: &nbsp;
-                            <a href={comparisonUrls.url2} target="_blank" rel="noopener noreferrer">
-                              Click here to view Product 2
-                            </a>
+                        <Box mt="10px">
+                          <Text 
+                            component="a"
+                            href={comparisonUrls.url2}
+                            target="_blank">
+                            {String(comparisonUrls.url2)}
                           </Text>
                         </Box>
                       )}
@@ -319,16 +320,16 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
             )}
           </Grid.Col>
           <Grid.Col span={{ base: 12, md: 4 }}>
-            {history.length > 0 && (
-              <Box mt="60px">
+            <Box mt="60px">
+              {history.length > 0 && (
                 <ComparisonHistorySidebar
                   history={history}
                   onDelete={deleteComparison}
                   onSelect={setSelectedComparison}
                   onClearAll={clearAllComparisons}
                 />
-              </Box>
-            )}
+              )}
+            </Box>
           </Grid.Col>
         </Grid>
       </Box>

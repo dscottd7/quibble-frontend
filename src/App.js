@@ -16,6 +16,7 @@ const theme = createTheme({
           overflowY: 'auto',
           overflowX: 'hidden', 
           maxHeight: '100vh',
+          maxWidth: '90vw',
         },
       },
       classNames: (_, { size }) => ({
@@ -44,12 +45,7 @@ function App() {
   
   return (
     <MantineProvider theme={theme}>
-      <Container 
-        fluid
-        styles={{
-          maxWidth: '1200px',
-      }}
-      >
+      <Container fluid >
           <Header />
           <HomePage 
             saveComparison={saveComparison}

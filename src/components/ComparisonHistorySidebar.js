@@ -30,18 +30,17 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) =
       >
         {history.map((item, index) => (
           <Card 
-          shadow="sm" 
-          padding="lg" 
-          radius="md" 
-          withBorder 
-          key={index}
-          sx={(theme) => ({
-            position: 'relative',
-            cursor: 'pointer',
-            }
-          )}
-          onClick={() => onSelect(item.data)}
-        >
+            shadow="sm" 
+            padding="lg" 
+            radius="md" 
+            withBorder 
+            key={index}
+            sx={{
+              position: 'relative',
+              cursor: 'pointer',
+              }}
+            onClick={() => onSelect(item.data)}
+          >
             <Grid>
               <Grid.Col span={10}>
                 <Text
@@ -73,22 +72,22 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) =
 
             {/* Display the URLs used for the comparison */}
             {item.urls && (
-              <div className="comparison-urls">
+              <Box>
                 {item.urls.url1 && (
-                  <div className="product-link">
+                  <Text mt="10px">
                     <a href={item.urls.url1} target="_blank" rel="noopener noreferrer">
                       {String(item.urls.url1)}
                     </a>
-                  </div>
+                  </Text>
                 )}
                 {item.urls.url2 && (
-                  <div className="product-link">
+                  <Text mt="10px">
                     <a href={item.urls.url2} target="_blank" rel="noopener noreferrer">
                       {String(item.urls.url2)}
                     </a>
-                  </div>
+                  </Text>
                 )}
-              </div>
+              </Box>
             )}
           </Card>
         ))}
