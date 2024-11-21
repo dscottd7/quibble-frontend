@@ -1,7 +1,6 @@
 import './App.css';
 import '@mantine/core/styles.css';
 import { Header } from './pages/Header';
-// import MainContainer from './pages/MainContainer';
 import ComparisonHistoryManager from './hooks/ComparisonHistoryManager';
 import { createTheme, MantineProvider, rem, Container } from '@mantine/core';
 import HomePage from './pages/HomePage';
@@ -46,7 +45,7 @@ function App() {
   return (
     <MantineProvider theme={theme}>
       <Container 
-        size="lg"
+        fluid
         styles={{
           maxWidth: '1200px',
       }}

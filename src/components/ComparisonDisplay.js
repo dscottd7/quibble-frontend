@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, List, Title, Text, Divider, Grid } from '@mantine/core';
+import { Card, List, Title, Text, Divider, Grid, Box } from '@mantine/core';
 
 const ComparisonDisplay = ({comparisonData}) => {
 
@@ -16,14 +16,14 @@ const ComparisonDisplay = ({comparisonData}) => {
 
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Title order={3} align="center" mb="md">
+      <Title order={3} mb="md">
         {brief_comparison_title}
       </Title>
 
-      <Text mt="md" weight={700} align="center">
+      <Text mt="md" weight={700} >
         <strong>Summary</strong>
       </Text>
-      <Text align="center" mt="sm" mb="lg">
+      <Text mt="sm" mb="lg">
         {comparison_summary}
       </Text>
 
@@ -31,22 +31,22 @@ const ComparisonDisplay = ({comparisonData}) => {
 
       <Grid gutter="lg">
         <Grid.Col span={5.5}>
-          <div>
-            <Title order={4} align="center">{product1}</Title>
-            <Text weight={700} mt="sm" align="center"><strong>Pros:</strong></Text>
+          <Box pl="10px">
+            <Title order={4} >{product1}</Title>
+            <Text weight={700} mt="sm" ><strong>Pros:</strong></Text>
             <List spacing="xs">
               {pros_product1.map((pro, index) => (
                 <List.Item key={index}>{pro}</List.Item>
               ))}
             </List>
 
-            <Text weight={700} mt="sm" align="center"><strong>Cons:</strong></Text>
+            <Text weight={700} mt="sm" ><strong>Cons:</strong></Text>
             <List spacing="xs">
               {cons_product1.map((con, index) => (
                 <List.Item key={index}>{con}</List.Item>
               ))}
             </List>
-          </div>
+          </Box>
         </Grid.Col>
 
         <Grid.Col span={1} style={{ display: 'flex', justifyContent: 'center' }}>
@@ -54,22 +54,22 @@ const ComparisonDisplay = ({comparisonData}) => {
         </Grid.Col>
 
         <Grid.Col span={5.5}>
-          <div>
-            <Title order={4} align="center">{product2}</Title>
-            <Text weight={500} mt="sm" align="center"><strong>Pros:</strong></Text>
+          <Box pr="10px">
+            <Title order={4} >{product2}</Title>
+            <Text weight={500} mt="sm" ><strong>Pros:</strong></Text>
             <List spacing="xs">
               {pros_product2.map((pro, index) => (
                 <List.Item key={index}>{pro}</List.Item>
               ))}
             </List>
 
-            <Text weight={500} mt="sm" align="center"><strong>Cons:</strong></Text>
+            <Text weight={500} mt="sm" ><strong>Cons:</strong></Text>
             <List spacing="xs">
               {cons_product2.map((con, index) => (
                 <List.Item key={index}>{con}</List.Item>
               ))}
             </List>
-          </div>
+          </Box>
         </Grid.Col>
       </Grid>
     </Card>
