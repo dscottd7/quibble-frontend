@@ -16,13 +16,22 @@ const theme = createTheme({
           overflowY: 'auto',
           overflowX: 'hidden', 
           maxHeight: '100vh',
-          maxWidth: '90vw',
+          maxWidth: '100vw',
         },
       },
       classNames: (_, { size }) => ({
         root: cx({ [classes.responsiveContainer]: size === 'responsive' ? 'responsive-container' : ''}),
       }),
     }),
+    TextInput: {
+      styles: (theme) => ({
+        input: {
+          '&:not(:placeholder-shown)': {
+            backgroundColor: theme.colors.cyan[0], // Use a theme color
+          },
+        },
+      }),
+    },
   },
   headings: {
     fontFamily: 'Roboto, sans-serif',

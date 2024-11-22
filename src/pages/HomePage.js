@@ -230,10 +230,10 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
 
   return (
     <Center>
-      <Box maw="1200px">
+      <Box maw="1200px" ml="10px" mr="10px" >
         <Grid gutter={{ base: 10, xs: 'md', md: 'xl', xl: 60 }}>
-          <Grid.Col span={{ base: 12, md: 8 }}>
-            <Title mb="20px" order={2}>Compare any two products!</Title>
+          <Grid.Col span={history.length > 0 ? { base: 12, md: 8 } : { base: 12, md: 12 }}>
+            <Title mb="20px" c="cyan" order={2}>Compare any two products!</Title>
             <Text mb="10px">
               Paste the URL of any two products in the fields below, and click COMPARE
             </Text>
@@ -256,9 +256,9 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
                   justify="center"
                   gap="md"
                 >
-                  <Text c="blue" size="sm">{status.currentStep}</Text>
-                  <Progress size="xl" value={status.progressPercetage} striped animated />
-                  <Button variant="outline" onClick={handleCancel}>
+                  <Text c="cyan" size="sm">{status.currentStep}</Text>
+                  <Progress size="xl" color="cyan" value={status.progressPercetage} striped animated />
+                  <Button variant="outline" color="cyan" c="cyan" onClick={handleCancel}>
                     Cancel Request
                   </Button>
                 </Stack>
@@ -277,10 +277,10 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
               <Box>
                 {/* Save Comparison / New Comparison Buttons */}
                 <Group justify="space-between">
-                  <Button variant="subtle" size="xs" onClick={handleSaveComparison} style={{ alignSelf: 'flex-start' }}>
+                  <Button variant="subtle" size="xs" c="cyan" onClick={handleSaveComparison} style={{ alignSelf: 'flex-start' }}>
                     Save Comparison
                   </Button>
-                  <Button variant="subtle" size="xs" onClick={handleNewComparison} style={{ alignSelf: 'flex-end' }}>
+                  <Button variant="subtle" size="xs" c="cyan" onClick={handleNewComparison} style={{ alignSelf: 'flex-end' }}>
                     New Comparison
                   </Button>
                 </Group>
@@ -319,18 +319,18 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
               </Box>
             )}
           </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 4 }}>
-            <Box mt="60px">
-              {history.length > 0 && (
+          {history.length > 0 && (
+            <Grid.Col span={{ base: 12, md: 4 }}>
+              <Box mt="60px">
                 <ComparisonHistorySidebar
                   history={history}
                   onDelete={deleteComparison}
                   onSelect={setSelectedComparison}
                   onClearAll={clearAllComparisons}
                 />
-              )}
-            </Box>
-          </Grid.Col>
+              </Box>
+            </Grid.Col>
+          )}
         </Grid>
       </Box>
     </Center>

@@ -16,7 +16,7 @@ const ComparisonDisplay = ({comparisonData}) => {
 
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Title order={3} mb="md">
+      <Title order={3} mb="md" c="cyan" >
         {brief_comparison_title}
       </Title>
 
@@ -32,7 +32,7 @@ const ComparisonDisplay = ({comparisonData}) => {
       <Grid gutter="lg">
         <Grid.Col span={5.5}>
           <Box pl="10px">
-            <Title order={4} >{product1}</Title>
+            <Title order={4} c="cyan" >{product1}</Title>
             <Text weight={700} mt="sm" ><strong>Pros:</strong></Text>
             <List spacing="xs">
               {pros_product1.map((pro, index) => (
@@ -55,7 +55,7 @@ const ComparisonDisplay = ({comparisonData}) => {
 
         <Grid.Col span={5.5}>
           <Box pr="10px">
-            <Title order={4} >{product2}</Title>
+            <Title order={4} c="cyan" >{product2}</Title>
             <Text weight={500} mt="sm" ><strong>Pros:</strong></Text>
             <List spacing="xs">
               {pros_product2.map((pro, index) => (

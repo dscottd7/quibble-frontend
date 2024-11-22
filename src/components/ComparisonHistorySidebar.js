@@ -7,7 +7,7 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) =
   return (
     <Box>
       <Flex align="center" justify="space-between">
-        <Title order={4}>
+        <Title order={4} c="cyan" >
           Saved Comparisons
         </Title>
         {history.length > 0 && (
