@@ -49,7 +49,7 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
           />
         </Box>
 
-        <Button onClick={() => setOpen(!open)} variant='transparent' color="black" size='md'>
+        <Button onClick={() => setOpen(!open)} variant='transparent' color="grey" size='md'>
           {open ? <label className={classes.options_label}>Hide comparison options</label> : <label className={classes.options_label}>More comparison options</label>}
           {open ? <IconChevronUp /> : <IconChevronDown />}
         </Button>

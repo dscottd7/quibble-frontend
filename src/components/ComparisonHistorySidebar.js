@@ -72,22 +72,30 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) =
 
             {/* Display the URLs used for the comparison */}
             {item.urls && (
-              <Box>
+              <Stack pt="10px" >
                 {item.urls.url1 && (
-                  <Text mt="10px">
-                    <a href={item.urls.url1} target="_blank" rel="noopener noreferrer">
-                      {String(item.urls.url1)}
-                    </a>
+                  <Text
+                    c="cyan"
+                    td="underline"
+                    component='a'
+                    href={item.urls.url1}
+                    target="_blank"
+                  >
+                    {String(item.urls.url1)}
                   </Text>
                 )}
                 {item.urls.url2 && (
-                  <Text mt="10px">
-                    <a href={item.urls.url2} target="_blank" rel="noopener noreferrer">
+                  <Text
+                    c="cyan"
+                    td="underline"
+                    component='a'
+                    href={item.urls.url2}
+                    target="_blank"
+                  >
                       {String(item.urls.url2)}
-                    </a>
                   </Text>
                 )}
-              </Box>
+              </Stack>
             )}
           </Card>
         ))}

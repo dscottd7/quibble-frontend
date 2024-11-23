@@ -234,10 +234,10 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
         <Grid gutter={{ base: 10, xs: 'md', md: 'xl', xl: 60 }}>
           <Grid.Col span={history.length > 0 ? { base: 12, md: 8 } : { base: 12, md: 12 }}>
             <Title mb="20px" c="cyan" order={2}>Compare any two products!</Title>
-            <Text mb="10px">
+            <Text size="sm" c="dimmed" mb="10px">
               Paste the URL of any two products in the fields below, and click COMPARE
             </Text>
-            <Space h="md" />
+            <Space h="sm" />
             <UrlForm
               urls={urls}
               preferences={preferences}
@@ -297,7 +297,10 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
                           <Text 
                             component="a"
                             href={comparisonUrls.url1}
-                            target="_blank">
+                            target="_blank"
+                            c="cyan"
+                            td="underline"
+                          >
                             {String(comparisonUrls.url1)}
                           </Text>
                         </Box>
@@ -307,7 +310,10 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
                           <Text 
                             component="a"
                             href={comparisonUrls.url2}
-                            target="_blank">
+                            target="_blank"
+                            c="cyan"
+                            td="underline"
+                          >
                             {String(comparisonUrls.url2)}
                           </Text>
                         </Box>
