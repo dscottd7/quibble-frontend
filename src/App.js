@@ -1,7 +1,6 @@
 import './App.css';
 import '@mantine/core/styles.css';
 import { Header } from './pages/Header';
-// import MainContainer from './pages/MainContainer';
 import ComparisonHistoryManager from './hooks/ComparisonHistoryManager';
 import { createTheme, MantineProvider, rem, Container } from '@mantine/core';
 import HomePage from './pages/HomePage';
@@ -20,12 +19,22 @@ const theme = createTheme({
           overflowY: 'auto',
           overflowX: 'hidden', 
           maxHeight: '100vh',
+          maxWidth: '100vw',
         },
       },
       classNames: (_, { size }) => ({
         root: cx({ [classes.responsiveContainer]: size === 'responsive' ? 'responsive-container' : ''}),
       }),
     }),
+    TextInput: {
+      styles: (theme) => ({
+        input: {
+          '&:not(:placeholder-shown)': {
+            backgroundColor: theme.colors.cyan[0], // Use a theme color
+          },
+        },
+      }),
+    },
   },
   headings: {
     fontFamily: 'Roboto, sans-serif',
@@ -48,20 +57,16 @@ function App() {
 
   return (
     <MantineProvider theme={theme}>
-      <Router>
-        <Header />
-        <Container
-          size="lg"
-          styles={{
-            maxWidth: '1200px',
-          }}
-        >
+      
+      <Container fluid>
+        <Router>
+          <Header />
           <Routes>
-            {/* Default route for HomePage */}
-            <Route
+            /* Default route for HomePage */
+            <Route 
               path="/"
               element={
-                <HomePage
+                <HomePage 
                   saveComparison={saveComparison}
                   setSelectedComparison={setSelectedComparison}
                   selectedComparison={selectedComparison}
@@ -71,12 +76,9 @@ function App() {
                 />
               }
             />
-            
-            {/* Route for AboutPage */}
-            <Route path="/about" element={<AboutPage />} />
           </Routes>
-        </Container>
-      </Router>
+        </Router> 
+      </Container>  
     </MantineProvider>
   );
 }

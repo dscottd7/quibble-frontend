@@ -27,7 +27,7 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
             required
             className={classes.url_input}
             rightSection={
-              <ActionIcon onClick={() => handleClearUrl('url1')} variant="transparent" aria-label="Settings" >
+              <ActionIcon onClick={() => handleClearUrl('url1')} variant="transparent" aria-label="Settings" c="cyan" >
                 <IconX size={16} />
               </ActionIcon>
             }
@@ -42,14 +42,14 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
             required
             className={classes.url_input}
             rightSection={
-              <ActionIcon onClick={() => handleClearUrl('url2')} variant="transparent" aria-label="Settings">
+              <ActionIcon onClick={() => handleClearUrl('url2')} variant="transparent" aria-label="Settings" c="cyan" >
                 <IconX size={16} />
               </ActionIcon>
             }
           />
         </Box>
 
-        <Button onClick={() => setOpen(!open)} variant='transparent' color="black" size='md'>
+        <Button onClick={() => setOpen(!open)} variant='transparent' color="grey" size='md'>
           {open ? <label className={classes.options_label}>Hide comparison options</label> : <label className={classes.options_label}>More comparison options</label>}
           {open ? <IconChevronUp /> : <IconChevronDown />}
         </Button>
@@ -62,11 +62,11 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
               description='Select the categories you want to compare'
             >
               <Group mt="xs">
-                <Switch value='Price' label='Price' />
-                <Switch value='Model' label='Model' />
-                <Switch value='Condition' label='Condition' />
-                <Switch value='Features' label='Features' />
-                <Switch value='Estimated Delivery' label='Delivery' />
+                <Switch value='Price' label='Price' color="cyan" />
+                <Switch value='Model' label='Model' color="cyan" />
+                <Switch value='Condition' label='Condition' color="cyan" />
+                <Switch value='Features' label='Features' color="cyan" />
+                <Switch value='Estimated Delivery' label='Delivery' color="cyan" />
               </Group>
             </Switch.Group>
             </Box>
@@ -85,7 +85,7 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
         </Box> 
       )}
         <Box>
-          <Button fullWidth type="submit">
+          <Button fullWidth type="submit" color="cyan" >
             Compare
           </Button>
         </Box>

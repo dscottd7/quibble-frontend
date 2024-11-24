@@ -7,7 +7,7 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) =
   return (
     <Box>
       <Flex align="center" justify="space-between">
-        <Title order={3}>
+        <Title order={4} c="cyan" >
           Saved Comparisons
         </Title>
         {history.length > 0 && (
@@ -29,14 +29,24 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) =
         gap="md"
       >
         {history.map((item, index) => (
-          <Card shadow="sm" padding="lg" radius="md" withBorder key={index} sx={{ position: 'relative' }}>
+          <Card 
+            shadow="sm" 
+            padding="lg" 
+            radius="md" 
+            withBorder 
+            key={index}
+            sx={{
+              position: 'relative',
+              cursor: 'pointer',
+              }}
+            onClick={() => onSelect(item.data)}
+          >
             <Grid>
               <Grid.Col span={10}>
                 <Text
-                  className="comparison-title"
-                  onClick={() => onSelect(item.data)}
-                  fw={500} // font-weight: 500
+                  fw={500}
                   sx={{ fontSize: '16px', marginBottom: '10px' }}
+                  onClick={() => onSelect(item.data)}
                 >
                   {item.title || `Comparison ${index + 1}`}
                 </Text>
@@ -50,8 +60,11 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) =
                   wrap="wrap"
                 >
                   <CloseButton 
-                    onClick={() => onDelete(index)} 
-                    sx={{ position: 'absolute', top: 10, right: 10 }} 
+                    sx={{ position: 'absolute', top: 10, right: 10 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDelete(index);
+                    }} 
                   />
                 </Flex>
               </Grid.Col>
@@ -59,22 +72,30 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) =
 
             {/* Display the URLs used for the comparison */}
             {item.urls && (
-              <div className="comparison-urls">
+              <Stack pt="10px" >
                 {item.urls.url1 && (
-                  <div className="product-link">
-                    <a href={item.urls.url1} target="_blank" rel="noopener noreferrer">
-                      Product 1
-                    </a>
-                  </div>
+                  <Text
+                    c="cyan"
+                    td="underline"
+                    component='a'
+                    href={item.urls.url1}
+                    target="_blank"
+                  >
+                    {String(item.urls.url1)}
+                  </Text>
                 )}
                 {item.urls.url2 && (
-                  <div className="product-link">
-                    <a href={item.urls.url2} target="_blank" rel="noopener noreferrer">
-                      Product 2
-                    </a>
-                  </div>
+                  <Text
+                    c="cyan"
+                    td="underline"
+                    component='a'
+                    href={item.urls.url2}
+                    target="_blank"
+                  >
+                      {String(item.urls.url2)}
+                  </Text>
                 )}
-              </div>
+              </Stack>
             )}
           </Card>
         ))}
@@ -88,7 +109,7 @@ ComparisonHistorySidebar.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       data: PropTypes.string.isRequired,
-      uurls: PropTypes.shape({
+      urls: PropTypes.shape({
         url1: PropTypes.string.isRequired,
         url2: PropTypes.string.isRequired,
       }).isRequired,
