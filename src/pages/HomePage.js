@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { UrlForm } from '../components/UrlForm';
-import { Progress, Grid, Button, Text, Title, Group, Box, Stack, Container, Space } from '@mantine/core';
-//import ReactMarkdown from 'react-markdown';
-// import ActionButton from '../components/ActionButton';
+import { Progress, Grid, Button, Text, Title, Group, Box, Stack, Space, Center } from '@mantine/core';
 import ComparisonDisplay from '../components/ComparisonDisplay';
 import ComparisonHistorySidebar from '../components/ComparisonHistorySidebar';
 
@@ -231,109 +229,117 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
   };
 
   return (
-    <Container
-      size="lg"
-      styles={{
-        maxWidth: '1200px',
-      }}
-    >
-      <Grid gutter={{ base: 10, xs: 'md', md: 'xl', xl: 60 }}>
-        <Grid.Col span={{ base: 12, md: 8 }}>
-          <Title order={2}>Compare any two products!</Title>
-          <Text h="xxl">
-            Paste the URL of any two products in the fields below, and click COMPARE for a comparison
-          </Text>
-          <Space h="md" />
-          <UrlForm
-            urls={urls}
-            preferences={preferences}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            isDisabled={status.isProcessing}
-          />
-          <Space h="lg" />
-    
-          {/* WebSocket status */}
-          {status.isProcessing && (
-            <Box>
-              <Space h="md" />
-              <Stack
-                align="stretch"
-                justify="center"
-                gap="md"
-              >
-                <Text c="blue" size="sm">{status.currentStep}</Text>
-                <Progress size="xl" value={status.progressPercetage} striped animated />
-                <Button variant="outline" onClick={handleCancel}>
-                  Cancel Request
-                </Button>
-              </Stack>
-            </Box>
+    <Center>
+      <Box maw="1200px" ml="10px" mr="10px" >
+        <Grid gutter={{ base: 10, xs: 'md', md: 'xl', xl: 60 }}>
+          <Grid.Col span={history.length > 0 ? { base: 12, md: 8 } : { base: 12, md: 12 }}>
+            <Title mb="20px" c="cyan" order={2}>Compare any two products!</Title>
+            <Text size="sm" c="dimmed" mb="10px">
+              Paste the URL of any two products in the fields below, and click COMPARE
+            </Text>
+            <Space h="sm" />
+            <UrlForm
+              urls={urls}
+              preferences={preferences}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              isDisabled={status.isProcessing}
+            />
+            <Space h="lg" />
+      
+            {/* WebSocket status */}
+            {status.isProcessing && (
+              <Box>
+                <Space h="md" />
+                <Stack
+                  align="stretch"
+                  justify="center"
+                  gap="md"
+                >
+                  <Text c="cyan" size="sm">{status.currentStep}</Text>
+                  <Progress size="xl" color="cyan" value={status.progressPercetage} striped animated />
+                  <Button variant="outline" color="cyan" c="cyan" onClick={handleCancel}>
+                    Cancel Request
+                  </Button>
+                </Stack>
+              </Box>
+            )}
+      
+            {/* Error message */}
+            {status.error && (
+              <Box>
+                <Text c="red">{status.error}</Text>
+              </Box>
+            )}
+      
+            {/* Comparison Result Section */}
+            {status.comparison && !status.error && (
+              <Box>
+                {/* Save Comparison / New Comparison Buttons */}
+                <Group justify="space-between">
+                  <Button variant="subtle" size="xs" c="cyan" onClick={handleSaveComparison} style={{ alignSelf: 'flex-start' }}>
+                    Save Comparison
+                  </Button>
+                  <Button variant="subtle" size="xs" c="cyan" onClick={handleNewComparison} style={{ alignSelf: 'flex-end' }}>
+                    New Comparison
+                  </Button>
+                </Group>
+                {/* Comparison Content */}
+                <Space h="md" />
+                <ComparisonDisplay comparisonData={status.comparison}/>
+                <Group>
+                  {/* Comparison URLs */}
+                  {comparisonUrls && (
+                    <Box mt="20px">
+                      <Title order={4}>Product Links:</Title>
+                      {comparisonUrls.url1 && (
+                        <Box mt="10px">
+                          <Text 
+                            component="a"
+                            href={comparisonUrls.url1}
+                            target="_blank"
+                            c="cyan"
+                            td="underline"
+                          >
+                            {String(comparisonUrls.url1)}
+                          </Text>
+                        </Box>
+                      )}
+                      {comparisonUrls.url2 && (
+                        <Box mt="10px">
+                          <Text 
+                            component="a"
+                            href={comparisonUrls.url2}
+                            target="_blank"
+                            c="cyan"
+                            td="underline"
+                          >
+                            {String(comparisonUrls.url2)}
+                          </Text>
+                        </Box>
+                      )}
+                    </Box>
+                  )}
+                  
+                </Group>
+              </Box>
+            )}
+          </Grid.Col>
+          {history.length > 0 && (
+            <Grid.Col span={{ base: 12, md: 4 }}>
+              <Box mt="60px">
+                <ComparisonHistorySidebar
+                  history={history}
+                  onDelete={deleteComparison}
+                  onSelect={setSelectedComparison}
+                  onClearAll={clearAllComparisons}
+                />
+              </Box>
+            </Grid.Col>
           )}
-    
-          {/* Error message */}
-          {status.error && (
-            <Box>
-              <Text color="red">{status.error}</Text>
-            </Box>
-          )}
-    
-          {/* Comparison Result Section */}
-          {status.comparison && !status.error && (
-            <Box>
-              {/* Save Comparison / New Comparison Buttons */}
-              <Group justify="space-between">
-                <Button variant="subtle" size="xs" onClick={handleSaveComparison} style={{ alignSelf: 'flex-start' }}>
-                  Save Comparison
-                </Button>
-                <Button variant="subtle" size="xs" onClick={handleNewComparison} style={{ alignSelf: 'flex-end' }}>
-                  New Comparison
-                </Button>
-              </Group>
-              {/* Comparison Content */}
-              <ComparisonDisplay comparisonData={status.comparison}/>
-              <Group>
-                {/* Comparison URLs */}
-                {comparisonUrls && (
-                  <Box>
-                    <Text>You can access the product URLs below:</Text>
-                    {comparisonUrls.url1 && (
-                      <Box>
-                        <Text>
-                          Product 1: &nbsp;
-                          <a href={comparisonUrls.url1} target="_blank" rel="noopener noreferrer">
-                            Click here to view Product 1
-                          </a>
-                        </Text>
-                      </Box>
-                    )}
-                    {comparisonUrls.url2 && (
-                      <Box>
-                        <Text>Product 2: &nbsp;
-                          <a href={comparisonUrls.url2} target="_blank" rel="noopener noreferrer">
-                            Click here to view Product 2
-                          </a>
-                        </Text>
-                      </Box>
-                    )}
-                  </Box>
-                )}
-                
-              </Group>
-            </Box>
-          )}
-        </Grid.Col>
-    
-        <Grid.Col span={{ base: 12, md: 4 }}>
-          <ComparisonHistorySidebar
-            history={history}
-            onDelete={deleteComparison}
-            onSelect={setSelectedComparison}
-            onClearAll={clearAllComparisons}
-          />
-        </Grid.Col>
-      </Grid>
-    </Container>
+        </Grid>
+      </Box>
+    </Center>
   );
 };
 
