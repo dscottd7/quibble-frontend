@@ -76,6 +76,8 @@ function App() {
                 />
               }
             />
+            /* Route for AboutPage */
+            <Route path="/about" element={<AboutPage />} />
           </Routes>
         </Router> 
       </Container>  
