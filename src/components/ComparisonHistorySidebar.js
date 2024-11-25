@@ -81,7 +81,8 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) =
                     href={item.urls.url1}
                     target="_blank"
                   >
-                    {String(item.urls.url1)}
+                    {/* {String(item.urls.url1)} */}
+                    {item.product1}
                   </Text>
                 )}
                 {item.urls.url2 && (
@@ -92,7 +93,7 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) =
                     href={item.urls.url2}
                     target="_blank"
                   >
-                      {String(item.urls.url2)}
+                      {item.product2}
                   </Text>
                 )}
               </Stack>
@@ -109,6 +110,8 @@ ComparisonHistorySidebar.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       data: PropTypes.string.isRequired,
+      product1: PropTypes.string.isRequired,
+      product2: PropTypes.string.isRequired,
       urls: PropTypes.shape({
         url1: PropTypes.string.isRequired,
         url2: PropTypes.string.isRequired,

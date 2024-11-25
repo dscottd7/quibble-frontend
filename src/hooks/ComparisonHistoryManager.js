@@ -18,6 +18,8 @@ const ComparisonHistoryManager = () => {
     const updatedComparisonData = {
       title: comparisonData.title,
       data: comparisonData.data,
+      product1: comparisonData.product1, // Add product1 title
+      product2: comparisonData.product2, // Add product2 title
       urls: { ...comparisonData.urls }, // Add the URLs to be saved
     };
     const updatedHistory = [...history, updatedComparisonData];
