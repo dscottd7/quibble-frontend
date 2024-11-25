@@ -1,60 +1,110 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { UrlForm } from '../components/UrlForm';
-import ReactMarkdown from 'react-markdown';
-import ProgressBarr from '../components/Progress';
-import ActionButton from '../components/ActionButton';
+import { Progress, Grid, Button, Text, Title, Group, Box, Stack, Space, Center } from '@mantine/core';
+import ComparisonDisplay from '../components/ComparisonDisplay';
+import ComparisonHistorySidebar from '../components/ComparisonHistorySidebar';
 
-const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison }) => {
-  const FETCH_URL = 'http://localhost:8000';
-
+const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, history, deleteComparison, clearAllComparisons }) => {
+  const STRUCTURED_WEBSOCKET_URL = 'ws://localhost:8000/ws/compare/structured'|| process.env.REACT_APP_WEBSOCKET_URL_STRUCTURED ;
+  const wsRef = useRef(null);
+  
   const initialUrlsState = { url1: '', url2: '' };
   const initialPreferencesState = { selected_categories: [], user_preference: '' };
-
   const [urls, setUrls] = useState(initialUrlsState);
   const [preferences, setPreferences] = useState(initialPreferencesState);
-  const [comparison, setComparison] = useState('');
-  const [error, setError] = useState('');
-  const [progress, setProgress] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [isRendered, setIsRendered] = useState(false); // Track if markdown is rendered
+  const [comparisonUrls, setComparisonUrls] = useState(null); // To store URLs used in the comparison
+  
+  const [status, setStatus] = useState({
+    isProcessing: false,
+    currentStep: '',  // For showing current progress description
+    progressPercetage: 0,  // For showing progress bar % value
+    error: '',
+    comparison: ''
+  });
 
-  // Load selected comparison when a previous one is selected from the hamburger menu
+  function handleWebSocketMessage(event) {
+    const data = JSON.parse(event.data);
+
+    switch (data.status) {
+      case 'progress':
+        // Update progress message
+        setStatus(prev => ({
+          ...prev,
+          currentStep: data.message || 'Processing...'
+        }));
+        if (data.message === 'Gathering info...') {
+          setStatus(prev => ({
+            ...prev,
+            progressPercetage: 25
+          }));
+        };
+        if (data.message === 'Analyzing...') {
+          setStatus(prev => ({
+            ...prev,
+            progressPercetage: 50
+          }));
+        };
+        if (data.message === 'Generating comparison...') {
+          setStatus(prev => ({
+            ...prev,
+            progressPercetage: 75
+          }));
+        };
+        break;
+
+      case 'comparison':
+        // Final comparison received
+        setStatus(prev => ({
+          isProcessing: false,
+          currentStep: '',
+          error: '',
+          comparison: data.data
+        }));
+        setComparisonUrls(urls); // Store the URLs used for the comparison
+        closeWebSocket();
+        break;
+
+      case 'error':
+        setStatus(prev => ({
+          isProcessing: false,
+          currentStep: '',
+          error: data.message || 'Failed to compare products. Please try again.',
+          comparison: ''
+        }));
+        closeWebSocket();
+        break;
+
+      default:
+        console.log('Unknown message type:', data);
+    }
+  }
+
+  const closeWebSocket = () => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      // Send close frame with code 1000 (normal closure)
+      wsRef.current.close(1000, 'User cancelled operation');
+    }
+  };
+
+  // Load selected comparison when a previous one is selected from the sidebar
   useEffect(() => {
     if (selectedComparison) {
-      setComparison(selectedComparison);
-      setLoading(false);
-      setProgress(100);
-      setIsRendered(true);
+      setStatus((prev) => ({
+        ...prev,
+        comparison: selectedComparison,
+        isProcessing: false,
+        error: '',
+      }));
+      setComparisonUrls(selectedComparison.urls); // Load the URLs for the selected comparison
+      
+      if (selectedComparison.title) {
+        setStatus((prev) => ({
+          ...prev,
+          title: selectedComparison.title,
+        }));
+      }
     }
   }, [selectedComparison]);
-
-  // Monitor comparison state and set isRendered to true once the comparison is set
-  useEffect(() => {
-    if (comparison && !loading) {
-      const timer = setTimeout(() => {
-        setIsRendered(true);
-      }, 100); // 100ms delay to ensure the markdown content is rendered
-      return () => clearTimeout(timer);
-    }
-  }, [comparison, loading]);
-
-   // Update progress while loading is true
-  useEffect(() => {
-    if (loading) {
-      setProgress(0);
-      const interval = setInterval(() => {
-        setProgress((prevProgress) => {
-          const newProgress = prevProgress + 2;
-          if (newProgress >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return newProgress;
-        });
-      }, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [loading]);
 
   // Handle change events for input fields and preference selection
   const handleChange = (e) => {
@@ -65,7 +115,6 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
       }));
     } else {
       const { name, value } = e.target || {};
-
       if (name === 'url1' || name === 'url2') {
         setUrls((prevUrls) => ({
           ...prevUrls,
@@ -83,62 +132,88 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
   // Handle the form submission to trigger the comparison
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setComparison('Comparing...');
-    setError('');
-    setLoading(true);
-    setIsRendered(false); // Reset isRendered state before loading
+    
+    // Reset state
+    setStatus({
+      isProcessing: true,
+      currentStep: 'Starting comparison...',
+      error: '',
+      comparison: ''
+    });
+    
+    // Close existing WebSocket if any
+    closeWebSocket();
 
-    try {
-      const res = await fetch(`${FETCH_URL}/compare`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+    // Create new WebSocket connection
+    const ws = new WebSocket(STRUCTURED_WEBSOCKET_URL);
+    wsRef.current = ws;
+
+    ws.onopen = () => {
+      ws.send(JSON.stringify({
+        urls: {
+          url1: urls.url1,
+          url2: urls.url2
         },
-        body: JSON.stringify({
-          urls: {
-            url1: urls.url1,
-            url2: urls.url2,
-          },
-          user_input: {
-            selected_categories: preferences.selected_categories,
-            user_preference: preferences.user_preference,
-          },
-        }),
-      });
+        user_input: {
+          selected_categories: preferences.selected_categories,
+          user_preference: preferences.user_preference,
+        },
+      }));
+    };
 
-      if (!res.ok) {
-        throw new Error(`Failed to fetch /compare: ${res.status}`);
-      }
+    ws.onmessage = handleWebSocketMessage;
+    
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+      setStatus(prev => ({
+        isProcessing: false,
+        currentStep: '',
+        error: 'Connection error occurred',
+        comparison: ''
+      }));
+    };
 
-      const data = await res.json();
-      setLoading(false);
-      setProgress(100);
-
-      if (data && data.comparison) {
-        setComparison(data.comparison);
-      } else {
-        throw new Error('Response did not contain comparison data');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setError('Failed to compare products. Please try again.');
-      setComparison('');
-      setLoading(false);
-    }
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
+    };
   };
+
+  // Handle user cancelling request
+  const handleCancel = () => {
+    closeWebSocket();
+    setStatus({
+      isProcessing: false,
+      currentStep: '',
+      error: 'Comparison cancelled',
+      comparison: ''
+    });
+  };
+
+  // Clean up WebSocket on unmount
+  useEffect(() => {
+    return () => {
+      closeWebSocket();
+    };
+  }, []);
 
   // Handle saving the current comparison
   const handleSaveComparison = () => {
-    const titleMatch = comparison.match(/^#\s*(.+)$/m); // Matches "# Title" as the title
-    const title = titleMatch ? titleMatch[1] : `Comparison on ${new Date().toLocaleString()}`;
-
-    const comparisonData = {
+    if(status.comparison){ 
+      const title = status.comparison.brief_comparison_title || `Comparison on ${new Date().toLocaleString()}`;
+      // Extracting product1 and product2 titles from the response
+      const product1Title = status.comparison.product1
+      const product2Title = status.comparison.product2
+      
+    saveComparison({
       title: title,
-      data: comparison,
+      data: status.comparison, // Use status.comparison to ensure you save the latest data.
+      product1: product1Title, // Save product1 title
+      product2: product2Title, // Save product2 title
+      urls: { ...urls },// Save the URLs used during comparison
+    });
+    }
   };
-    saveComparison(comparisonData);
-  };
-
+  
   // Handle starting a new comparison by resetting the form
   const handleNewComparison = () => {
     resetForm();
@@ -148,56 +223,129 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison })
   const resetForm = () => {
     setUrls(initialUrlsState);
     setPreferences(initialPreferencesState);
-    setComparison('');
-    setError('');
-    setProgress(0);
-    setLoading(false);
-    setIsRendered(false); 
+    setStatus({
+      isProcessing: false,
+      currentStep: '',
+      progressPercentage: 0,
+      error: '',
+      comparison: ''
+    });
   };
 
   return (
-    <div className="main-content">
-      {/* Description Section */}
-      <div className="description">
-        <h2>Compare any two products!</h2>
-        <p>Paste the URL of any two products in the fields below, and click COMPARE for a comparison</p>
-      </div>
-
-      {/* URL Form to Input Product URLs and Preferences */}
-      <UrlForm
-        urls={urls}
-        preferences={preferences}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-      />
-
-      {/* Loading Progress Bar */}
-      {loading && (
-        <div style={{ width: '300px', margin: '0 auto' }}>
-          <ProgressBarr value={progress} />
-        </div>
-      )}
-
-      {/* Error Message Section */}
-      {error && (
-        <div className="error-message" role="alert">
-          {error}
-        </div>
-      )}
-
-      {/* Comparison Result Section */}
-      {comparison && !error && (
-        <div className="comparison-result-box">
-          <ReactMarkdown>{comparison}</ReactMarkdown>
-          {isRendered && (
-            <div className="actions">
-              <ActionButton label="Save Comparison" onClick={handleSaveComparison} />
-              <ActionButton label="New Comparison" onClick={handleNewComparison} />
-            </div>
+    <Center>
+      <Box maw="1200px" ml="10px" mr="10px" >
+        <Grid gutter={{ base: 10, xs: 'md', md: 'xl', xl: 60 }}>
+          <Grid.Col span={history.length > 0 ? { base: 12, md: 8 } : { base: 12, md: 12 }}>
+            <Title mb="20px" c="cyan" order={2}>Compare any two products!</Title>
+            <Text size="sm" c="dimmed" mb="10px">
+              Paste the URL of any two products in the fields below, and click COMPARE
+            </Text>
+            <Space h="sm" />
+            <UrlForm
+              urls={urls}
+              preferences={preferences}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              isDisabled={status.isProcessing}
+            />
+            <Space h="lg" />
+      
+            {/* WebSocket status */}
+            {status.isProcessing && (
+              <Box>
+                <Space h="md" />
+                <Stack
+                  align="stretch"
+                  justify="center"
+                  gap="md"
+                >
+                  <Text c="cyan" size="sm">{status.currentStep}</Text>
+                  <Progress size="xl" color="cyan" value={status.progressPercetage} striped animated />
+                  <Button variant="outline" color="cyan" c="cyan" onClick={handleCancel}>
+                    Cancel Request
+                  </Button>
+                </Stack>
+              </Box>
+            )}
+      
+            {/* Error message */}
+            {status.error && (
+              <Box>
+                <Text c="red">{status.error}</Text>
+              </Box>
+            )}
+      
+            {/* Comparison Result Section */}
+            {status.comparison && !status.error && (
+              <Box>
+                {/* Save Comparison / New Comparison Buttons */}
+                <Group justify="space-between">
+                  <Button variant="subtle" size="xs" c="cyan" onClick={handleSaveComparison} style={{ alignSelf: 'flex-start' }}>
+                    Save Comparison
+                  </Button>
+                  <Button variant="subtle" size="xs" c="cyan" onClick={handleNewComparison} style={{ alignSelf: 'flex-end' }}>
+                    New Comparison
+                  </Button>
+                </Group>
+                {/* Comparison Content */}
+                <Space h="md" />
+                <ComparisonDisplay comparisonData={status.comparison}/>
+                <Group>
+                  {/* Comparison URLs */}
+                  {comparisonUrls && (
+                    <Box mt="20px">
+                      <Title order={4}>Product Links:</Title>
+                      {comparisonUrls.url1 && status.comparison.product1 &&(
+                        <Box mt="10px">
+                          <Text 
+                            component="a"
+                            href={comparisonUrls.url1}
+                            target="_blank"
+                            c="cyan"
+                            td="underline"
+                          >
+                            {/* {String(comparisonUrls.url1)} */}
+                            {status.comparison.product1}
+                          </Text>
+                        </Box>
+                      )}
+                      {comparisonUrls.url2 && status.comparison.product1 &&(
+                        <Box mt="10px">
+                          <Text 
+                            component="a"
+                            href={comparisonUrls.url2}
+                            target="_blank"
+                            c="cyan"
+                            td="underline"
+                          >
+                            {/* {String(comparisonUrls.url2)} */}
+                            {status.comparison.product2}
+                          </Text>
+                        </Box>
+                      )}
+                    </Box>
+                  )}
+                  
+                </Group>
+              </Box>
+            )}
+          </Grid.Col>
+          {history.length > 0 && (
+            <Grid.Col span={{ base: 12, md: 4 }}>
+              <Box mt="60px">
+                <ComparisonHistorySidebar
+                  history={history}
+                  onDelete={deleteComparison}
+                  onSelect={setSelectedComparison}
+                  onClearAll={clearAllComparisons}
+                />
+              </Box>
+            </Grid.Col>
           )}
-        </div>
-      )}
-    </div>
+        </Grid>
+      </Box>
+    </Center>
   );
 };
 
