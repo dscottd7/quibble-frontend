@@ -8,6 +8,7 @@
     border-color: transparent;
     border-radius: 6px;
     margin-bottom: 10px;
+    background-color: white;
 }
 
 .options_label {
@@ -40,19 +41,4 @@
     display: block; 
 }
 
-.progress-bar {
-    width: 400px; 
-    background-color: #e0e0e0; 
-    border-radius: 5px;
-    height: 20px;
-    position: relative;
-  }
-  
-  .progress-bar .progress {
-    background-color: #007bff; 
-    width: 0%; 
-    height: 100%;
-    border-radius: 5px;
-    transition: width 0.5s ease; 
-  }
   

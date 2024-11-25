@@ -1,16 +1,22 @@
 import {React, useState } from 'react';
-import { TextInput, Button, Textarea, Switch, Group} from '@mantine/core';
-import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import { TextInput, Button, Textarea, Switch, Group, Box, Space, ActionIcon } from '@mantine/core';
+import { IconChevronDown, IconChevronUp, IconX } from '@tabler/icons-react';
 import classes from '../styles/FormMenu.module.css';
 
 export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading, progress}) => {
   
   const [open, setOpen] = useState(false);
 
+  // Added action to clear a unwanted or wrong user url
+  const handleClearUrl = (urlKey) => {
+    handleChange({ target: { name: urlKey, value: '' } });
+  };
+
   return (
-    <div className={classes.form_container}>
+    // <div className={classes.form_container}>
+    <Box>
       <form onSubmit={handleSubmit}>
-        <div >
+        <Box >
           <TextInput 
             type='url'
             id='url1'
@@ -20,6 +26,11 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
             placeholder='Product 1 URL'
             required
             className={classes.url_input}
+            rightSection={
+              <ActionIcon onClick={() => handleClearUrl('url1')} variant="transparent" aria-label="Settings" c="cyan" >
+                <IconX size={16} />
+              </ActionIcon>
+            }
           />
           <TextInput 
             type='url'
@@ -30,31 +41,36 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
             placeholder='Product 2 URL'
             required
             className={classes.url_input}
+            rightSection={
+              <ActionIcon onClick={() => handleClearUrl('url2')} variant="transparent" aria-label="Settings" c="cyan" >
+                <IconX size={16} />
+              </ActionIcon>
+            }
           />
-        </div>
+        </Box>
 
-        <Button onClick={() => setOpen(!open)} variant='transparent' color="black" size='md'>
+        <Button onClick={() => setOpen(!open)} variant='transparent' color="grey" size='md'>
           {open ? <label className={classes.options_label}>Hide comparison options</label> : <label className={classes.options_label}>More comparison options</label>}
           {open ? <IconChevronUp /> : <IconChevronDown />}
         </Button>
         { open && 
-          (<div className={classes.options}>
-
+          (<Box>
+            <Box>
             <Switch.Group
               value={preferences.selected_categories}
               onChange={handleChange}
               description='Select the categories you want to compare'
             >
               <Group mt="xs">
-                <Switch value='Price' label='Price' />
-                <Switch value='Model' label='Model' />
-                <Switch value='Condition' label='Condition' />
-                <Switch value='Features' label='Features' />
-                <Switch value='Estimated Delivery' label='Delivery' />
+                <Switch value='Price' label='Price' color="cyan" />
+                <Switch value='Model' label='Model' color="cyan" />
+                <Switch value='Condition' label='Condition' color="cyan" />
+                <Switch value='Features' label='Features' color="cyan" />
+                <Switch value='Estimated Delivery' label='Delivery' color="cyan" />
               </Group>
             </Switch.Group>
-
-            <div>
+            </Box>
+            <Box>
               <Textarea
                 name="user_preference"
                 mt="md"
@@ -64,18 +80,18 @@ export const UrlForm = ({ urls, preferences, handleChange, handleSubmit, loading
                 autosize
                 minRows={4}
               />
-            </div>
-        </div> 
+            </Box>
+            <Space h="md" />
+        </Box> 
       )}
-
-        <br/>
-        <button type="submit" className={classes.submit_button}>
-          Compare
-        </button>
+        <Box>
+          <Button fullWidth type="submit" color="cyan" >
+            Compare
+          </Button>
+        </Box>
       </form>
 
-        
-
-    </div>
+    </Box>
+    // </div>
   );
 };
