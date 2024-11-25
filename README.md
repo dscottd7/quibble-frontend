@@ -1,5 +1,8 @@
-react-app
-# Getting Started with Create React App
+# quibble-frontend
+Frontend application for Quibble
+
+## Project Overview
+This project is a web-based application designed to compare products from different websites. It accepts two URLs and user preferences for comparison factors and passes them to the backend service.  The quibble backend attempts to scrape product information from those web pages (using Selenium), and then prompts OpenAI to generate a detailed comparison between the products based on factors provided by the user, which it returns to this frontend app for display back to the user.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -15,6 +18,8 @@ In the project directory, you can run:
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- the backend service URL will default to `ws://localhost:8000/ws/compare/structured` (for local testing) unless a different URL is specified by setting `REACT_APP_WEBSOCKET_URL_STRUCTURED=<target_backend_url>` in a `.env` file in your working directory.
+- **NOTE**: if building a docker image for local testing or deployment and overriding the default backend service URL per the instruction above, be sure that your are NOT ".dockerignore"-ing your `.env` file (React doesn't have direct access to runtime environment variables after build time).
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
@@ -73,4 +78,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
