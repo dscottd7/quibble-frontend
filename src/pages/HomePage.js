@@ -199,12 +199,15 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
   // Handle saving the current comparison
   const handleSaveComparison = () => {
     if(status.comparison){
-      // const titleMatch = status.comparison.match(/^#\s*(.+)/m);
-      // const title = titleMatch ? titleMatch[1].trim() : `Comparison on ${new Date().toLocaleString()}`;  
       const title = status.comparison.brief_comparison_title || `Comparison on ${new Date().toLocaleString()}`;
+      // Extract the product titles (or assign default values if missing)
+      const product1Title = status.comparison.product1 
+      const product2Title = status.comparison.product2 
     saveComparison({
       title: title,
       data: status.comparison, // Use status.comparison to ensure you save the latest data.
+      product1: product1Title,
+      product2: product2Title,
       urls: { ...urls },// Save the URLs used during comparison
     });
     }
@@ -301,7 +304,7 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
                             c="cyan"
                             td="underline"
                           >
-                            {String(comparisonUrls.url1)}
+                            {status.comparison.product1}
                           </Text>
                         </Box>
                       )}
@@ -314,7 +317,7 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
                             c="cyan"
                             td="underline"
                           >
-                            {String(comparisonUrls.url2)}
+                            {status.comparison.product2}
                           </Text>
                         </Box>
                       )}
