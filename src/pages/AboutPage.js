@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Progress, Grid, Button, Text, Title, Group, Box, Stack, Container, Space, Center, List, Anchor, Image } from '@mantine/core';
+import { Progress, Grid, Button, Text, Title, Group, Box, Stack, Container, Space, Center, List, Anchor, Image, Card } from '@mantine/core';
 
 const AboutPage = () => {
 
@@ -52,15 +52,53 @@ const AboutPage = () => {
           </Center>
           
           <Grid.Col span={{ base: 12, md: 6 }}>
-            <Title mb="20px" c="cyan" order={2}>Quibble Architecture</Title>
-            <Image src="/quibblearchitecture.png" h={275} alt="architecture" />
-            </Grid.Col>
+            <Title mb="20px" c="cyan" order={2}>Quibble's Tech Stack</Title>
+            <List size="sm" mb="10px">
+              <List.Item> 
+                <Text>
+                  The frontend of Quibble is built using <Anchor c="cyan" href="https://react.dev/" target="_blank" underline="hover">React</Anchor>, 
+                  leveraging <Anchor c="cyan" href="https://mantine.dev/" target="_blank" underline="hover">Mantine</Anchor> components for a modern, responsive, and accessible user interface.
+                </Text>
+              </List.Item>
+              <List.Item> 
+                <Text>
+                  The backend of Quibble is powered by <Anchor c="cyan" href="https://fastapi.tiangolo.com/" target="_blank" underline="hover">FastAPI</Anchor> for high-performance APIs and uses  <Anchor c="cyan" href="https://www.selenium.dev/" target="_blank" underline="hover">Selenium</Anchor> for dynamic web scraping and automation tasks.
+                </Text>                
+              </List.Item>
+              <List.Item>
+                <Text> 
+                  Frontend and backend connected via <Anchor c="cyan" href="https://fastapi.tiangolo.com/reference/websockets/" target="_blank" underline="hover">websockets</Anchor>.
+                </Text>
+              </List.Item>
+            </List>
+            <Image src="/quibblearchitecture.png" h={350} alt="logo" />
+            <Space h="md" />
+            <Title mb="20px" c="cyan" order={2}>Fork It, Run It, Love It</Title>
+            <List size="sm" mb="10px">
+              <List.Item> 
+                <Text>Quibble <Anchor c="cyan" href="https://github.com/dscottd7/quibble-frontend" target="_blank" underline="hover">Frontend</Anchor> and <Anchor c="cyan" href="https://github.com/dscottd7/quibble-backend" target="_blank" underline="hover">Backend</Anchor> on GitHub.
+                </Text>
+              </List.Item>
+              <List.Item> 
+                <Text>Quibble <Anchor c="cyan" href="https://hub.docker.com/r/jbh14/quibble-frontend/tags" target="_blank" underline="hover">Frontend</Anchor> and <Anchor c="cyan" href="https://hub.docker.com/r/jbh14/quibble-backend/tags" target="_blank" underline="hover">Backend</Anchor> Docker Images.
+                </Text>
+              </List.Item>
+              <List.Item> 
+                <Text>Quibble Backend Deployed to <Anchor c="cyan" href="https://quibble-backend-64265842032.us-central1.run.app" target="_blank" underline="hover">Google Cloud Run</Anchor> <Anchor c="cyan" href="https://quibble-backend-64265842032.us-central1.run.app/docs" target="_blank" underline="hover">(swagger docs)</Anchor>.
+                </Text>
+              </List.Item>
+            </List>
+
+          
+          </Grid.Col>
 
             <Grid.Col span={{ base: 12, md: 6 }}>
-            <Title mb="20px" c="cyan" order={2}>About the authors</Title>
-            <Text size="sm" c="dimmed" mb="10px">
-              <p>Quibble was started as a capstone project for Oregon State University's CS 467, Fall 2024.</p>
-              <p>The Quibble team is:</p>
+            <Title mb="20px" c="cyan" order={2}>The Quibble Crew</Title>
+            
+              <Text>
+                Quibble was started as a capstone project for Oregon State University's CS 467, Fall 2024.
+                The Quibble team is:
+              </Text>
               <List size="sm" mb="10px">
                 <List.Item> 
                   <Anchor c="cyan" href="https://www.linkedin.com/in/dscottdiperna/" target="_blank" underline="hover">Scott DiPerna</Anchor>
@@ -75,7 +113,57 @@ const AboutPage = () => {
                   <Anchor c="cyan" href="https://www.linkedin.com/in/joseph-brendan-heinz-92353976/" target="_blank" underline="hover">Brendan Heinz</Anchor>
                 </List.Item>
               </List>
-            </Text>
+              <Space h="md" />
+
+              <Grid gutter="lg">
+                {/* Row 1 */}
+                <Grid.Col span={{ base: 12, md: 6 }}>
+                  <Card shadow="sm" padding="lg">
+                    <Card.Section>
+                      <Image src="https://ca.slack-edge.com/T04DSF0LW-U07PEJ0Q0GM-a3169e6d74ba-512" h={200} alt="Scott DiPerna" />
+                    </Card.Section>
+                    <Title order={4} mt="md">
+                      <Anchor c="cyan" href="https://www.linkedin.com/in/dscottdiperna/" target="_blank" underline="hover">Scott DiPerna</Anchor>
+                    </Title>
+                  </Card>
+                </Grid.Col>
+
+                <Grid.Col span={{ base: 12, md: 6 }}>
+                  <Card shadow="sm" padding="lg">
+                    <Card.Section>
+                      <Image src="https://ca.slack-edge.com/T04DSF0LW-U07PEJ0Q0GM-a3169e6d74ba-512" h={200} alt="Xinrui Hou" />
+                    </Card.Section>
+                    <Title order={4} mt="md">
+                      <Anchor c="cyan" href="https://www.linkedin.com/in/xinruihou/" target="_blank" underline="hover">Xinrui Hou</Anchor>
+                    </Title>
+                  </Card>
+                </Grid.Col>
+
+                {/* Row 2 */}
+                <Grid.Col span={{ base: 12, md: 6 }}>
+                  <Card shadow="sm" padding="lg">
+                    <Card.Section>
+                      <Image src="https://ca.slack-edge.com/T04DSF0LW-U07PEJ0Q0GM-a3169e6d74ba-512" h={200} alt="Edward Mai" />
+                    </Card.Section>
+                    <Title order={4} mt="md">
+                      <Anchor c="cyan" href="https://www.linkedin.com/in/edward-mai/" target="_blank" underline="hover">Edward Mai</Anchor>
+                    </Title>
+                  </Card>
+                </Grid.Col>
+
+                <Grid.Col span={{ base: 12, md: 6 }}>
+                  <Card shadow="sm" padding="lg">
+                    <Card.Section>
+                      <Image src="/brendan.jpg" h={200} alt="Brendan Heinz" />
+                    </Card.Section>
+                    <Title order={4} mt="md">
+                      <Anchor c="cyan" href="https://www.linkedin.com/in/joseph-brendan-heinz-92353976/" target="_blank" underline="hover">Brendan Heinz</Anchor>
+                    </Title>
+                  </Card>
+                </Grid.Col>
+              
+              </Grid>
+            
           </Grid.Col>
         </Grid>
       </Box>
