@@ -304,7 +304,6 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
                             c="cyan"
                             td="underline"
                           >
-                            {/* {String(comparisonUrls.url1)} */}
                             {status.comparison.product1}
                           </Text>
                         </Box>
@@ -318,7 +317,6 @@ const HomePage = ({ saveComparison, setSelectedComparison, selectedComparison, h
                             c="cyan"
                             td="underline"
                           >
-                            {/* {String(comparisonUrls.url2)} */}
                             {status.comparison.product2}
                           </Text>
                         </Box>

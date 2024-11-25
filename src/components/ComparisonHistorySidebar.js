@@ -81,7 +81,6 @@ const ComparisonHistorySidebar = ({ history, onDelete, onSelect, onClearAll }) =
                     href={item.urls.url1}
                     target="_blank"
                   >
-                    {/* {String(item.urls.url1)} */}
                     {item.product1}
                   </Text>
                 )}
