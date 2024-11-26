@@ -71,8 +71,21 @@ const AboutPage = () => {
                 </Text>
               </List.Item>
             </List>
-            <Image src="/quibblearchitecture.png" h={350} alt="logo" />
-            <Space h="md" />
+            <Stack align="center">
+              <Image src="/quibblearchitecture.png" alt="logo" maxWidth="100%" />
+              <Text>Quibble Architecture</Text>
+            </Stack>
+            <Space h={75} />
+            <Stack align="center">
+              <Image src="/deployment.png" alt="logo" maxWidth="100%" />
+              <Text>Backend Deployment to Google Cloud Run</Text>
+            </Stack>
+
+          
+          </Grid.Col>
+
+            <Grid.Col span={{ base: 12, md: 6 }}>
+
             <Title mb="20px" c="cyan" order={2}>Fork It, Run It, Love It</Title>
             <List size="sm" mb="10px">
               <List.Item> 
@@ -83,38 +96,17 @@ const AboutPage = () => {
                 <Text>Quibble <Anchor c="cyan" href="https://hub.docker.com/r/jbh14/quibble-frontend/tags" target="_blank" underline="hover">Frontend</Anchor> and <Anchor c="cyan" href="https://hub.docker.com/r/jbh14/quibble-backend/tags" target="_blank" underline="hover">Backend</Anchor> Docker Images.
                 </Text>
               </List.Item>
-              <List.Item> 
-                <Text>Quibble Backend Deployed to <Anchor c="cyan" href="https://quibble-backend-64265842032.us-central1.run.app" target="_blank" underline="hover">Google Cloud Run</Anchor> <Anchor c="cyan" href="https://quibble-backend-64265842032.us-central1.run.app/docs" target="_blank" underline="hover">(swagger docs)</Anchor>.
-                </Text>
-              </List.Item>
             </List>
+            
+            <Space h="md" />
 
-          
-          </Grid.Col>
-
-            <Grid.Col span={{ base: 12, md: 6 }}>
             <Title mb="20px" c="cyan" order={2}>The Quibble Crew</Title>
             
               <Text>
-                Quibble was started as a capstone project for Oregon State University's CS 467, Fall 2024.
+                Quibble was built as a capstone project for Oregon State University's CS 467, Fall 2024.
                 The Quibble team is:
               </Text>
-              <List size="sm" mb="10px">
-                <List.Item> 
-                  <Anchor c="cyan" href="https://www.linkedin.com/in/dscottdiperna/" target="_blank" underline="hover">Scott DiPerna</Anchor>
-                </List.Item>
-                <List.Item>
-                  <Anchor c="cyan" href="https://www.linkedin.com/in/xinruihou/" target="_blank" underline="hover">Xinrui Hou</Anchor>
-                </List.Item>
-                <List.Item>
-                  <Anchor c="cyan" href="https://www.linkedin.com/in/edward-mai/" target="_blank" underline="hover">Edward Mai</Anchor>
-                </List.Item>
-                <List.Item>
-                  <Anchor c="cyan" href="https://www.linkedin.com/in/joseph-brendan-heinz-92353976/" target="_blank" underline="hover">Brendan Heinz</Anchor>
-                </List.Item>
-              </List>
               <Space h="md" />
-
               <Grid gutter="lg">
                 {/* Row 1 */}
                 <Grid.Col span={{ base: 12, md: 6 }}>
@@ -131,7 +123,7 @@ const AboutPage = () => {
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Card shadow="sm" padding="lg">
                     <Card.Section>
-                      <Image src="https://ca.slack-edge.com/T04DSF0LW-U07PEJ0Q0GM-a3169e6d74ba-512" h={200} alt="Xinrui Hou" />
+                      <Image src="/xinrui.png" h={200} alt="Xinrui Hou" />
                     </Card.Section>
                     <Title order={4} mt="md">
                       <Anchor c="cyan" href="https://www.linkedin.com/in/xinruihou/" target="_blank" underline="hover">Xinrui Hou</Anchor>
@@ -143,7 +135,7 @@ const AboutPage = () => {
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Card shadow="sm" padding="lg">
                     <Card.Section>
-                      <Image src="https://ca.slack-edge.com/T04DSF0LW-U07PEJ0Q0GM-a3169e6d74ba-512" h={200} alt="Edward Mai" />
+                      <Image src="/edward.png" h={200} alt="Edward Mai" />
                     </Card.Section>
                     <Title order={4} mt="md">
                       <Anchor c="cyan" href="https://www.linkedin.com/in/edward-mai/" target="_blank" underline="hover">Edward Mai</Anchor>
