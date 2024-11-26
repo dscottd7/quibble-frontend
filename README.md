@@ -31,28 +31,33 @@ The Quibble frontend enhances the user experience by:
 This README provides a comprehensive guide to setting up and understanding the Quibble frontend, which is built using React and Mantine UI components.
 
 ## Frontend Features
-1. Product Comparison with AI:
- - Users can paste the URLs of two products to compare them.
- - AI generates a structured comparison, displaying pros, cons, and a summary for each product.
-2. Category Selection:
-- Users can select specific categories they want to compare (e.g., Price, Model, Features).
-3. Save Comparison Feature:
-- Comparisons can be saved in the sidebar for future reference.
-- Users can clear all saved comparisons or delete individual ones.
-4. Product Title Display:
-- Product URLs are linked to their respective product titles, which are extracted during the comparison.
-5. User-Friendly UI:
-- Mantine components are used for enhanced styling and responsiveness.
-- The layout includes a main product comparison area and a sidebar for saved comparisons.
+1. **Product Comparison with OpenAI API**:
+   - Users can paste the URLs of two products to compare them.
+   - OpenAI generates a structured comparison, displayinga a detailed comparison summary with specific recommendations, and pros and cons for each product.
+2. **Category Selection and Preferance**:
+   - Users can select specific categories they want to compare (e.g., Price, Model, Features).
+   - Users can add their input for comparison preferance. 
+3. **Progress Monitoring**:
+   - A visual progress bar is displayed during the product comparison process, providing real-time feedback to the user.
+   - The progress bar shows the stages of comparison, ensuring that users are aware of the process and its completion status.
+4. **Save Comparison Feature**:
+   - Comparisons can be saved in the sidebar for future reference.
+   - Users can clear all saved comparisons or delete individual ones.
+5. **Product Title Display**:
+   - Product URLs are linked to their respective product titles, which are extracted during the comparison.
+   - This feature is integrated into both the comparison result box and the saved comparison history sidebar, making it easy for users to access product details directly.
+6. **User-Friendly UI**:
+   - Mantine components are used for enhanced styling and responsiveness.
+   - The layout includes a main product comparison area and a sidebar for saved comparisons.
 
 ## Quibble Architecture
 <img src='./src/assets/Quibble_Architecture.jpg' height = "300"/>
 
 ## Tech Stack
-#### React: For building the user interface.
-#### Mantine UI: For beautiful and customizable UI components.
-#### WebSockets: To manage real-time communication with the backend OpenAI service.
-#### Local Storage: To store saved comparisons persistently across sessions.
+- **React: For building the user interface.**
+- **Mantine UI: For beautiful and customizable UI components.**
+- **WebSockets: To manage real-time communication with the backend OpenAI service.**
+- **Local Storage: To store saved comparisons persistently across sessions.**
 
 ## Available Scripts
 
