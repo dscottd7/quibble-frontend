@@ -28,12 +28,13 @@ The Quibble frontend enhances the user experience by:
 - Offering a feature to save comparisons for future reference, providing convenience and easy access.
 - Allowing users to quickly access the specific products mentioned within the comparison.
 
-This README provides a comprehensive guide to setting up and understanding the Quibble frontend, which is built using React and Mantine UI components.
+This README provides a comprehensive guide to setting up and understanding the Quibble frontend, which is built using React and Mantine UI components, and deployed on Goodgle Cloud.
+You can access the site here:  
 
 ## Frontend Features
 1. **Product Comparison with OpenAI API**:
    - Users can paste the URLs of two products to compare them.
-   - OpenAI generates a structured comparison, displayinga a detailed comparison summary with specific recommendations, and pros and cons for each product.
+   - OpenAI generates a structured comparison, displaying a detailed comparison summary with specific recommendations, and pros and cons for each product.
 2. **Category Selection and Preferance**:
    - Users can select specific categories they want to compare (e.g., Price, Model, Features).
    - Users can add their input for comparison preferance. 
@@ -58,6 +59,7 @@ This README provides a comprehensive guide to setting up and understanding the Q
 - **Mantine UI: For beautiful and customizable UI components.**
 - **WebSockets: To manage real-time communication with the backend OpenAI service.**
 - **Local Storage: To store saved comparisons persistently across sessions.**
+- **Google Cloud Platform: The application is deployed into Google Cloud though Docker Image**
 
 ## Available Scripts
 
@@ -90,4 +92,6 @@ Launches the test runner in the interactive watch mode
 ## Citations
 - React Learning Guide. https://react.dev/learn
 - Mantine Documentation. https://mantine.dev/
-- OpenAI (n.d.). API Reference. OpenAI. https://platform.openai.com/docs/overview 
+- OpenAI (n.d.). API Reference. OpenAI. https://platform.openai.com/docs/overview
+- Google Cloud Deployment. https://cloud.google.com/sdk/gcloud/reference/app/deploy
+- DockerHub. https://hub.docker.com/ 
