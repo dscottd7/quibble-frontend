@@ -8,13 +8,13 @@
 
 ## Table of Contents
 1. [Project Overview](#overview)
-2. [Features](#product_features)
+2. [Frontend Features](#product_features)
 3. [Quibble Architecture](#quibble_architecture)
 4. [Tech Stack](#tech_stack)
 5. [Available Scripts](#scripts)
 6. [Frontend Walkthrough](#walkthrough)
 7. [Future Enhancements](#future_enhancement)
-8. [Citation](#citation)
+8. [Citations](#citation)
 
 
 ## Project Overview
@@ -30,7 +30,7 @@ The Quibble frontend enhances the user experience by:
 
 This README provides a comprehensive guide to setting up and understanding the Quibble frontend, which is built using React and Mantine UI components.
 
-## Features
+## Frontend Features
 1. Product Comparison with AI:
  - Users can paste the URLs of two products to compare them.
  - AI generates a structured comparison, displaying pros, cons, and a summary for each product.
@@ -82,7 +82,7 @@ Launches the test runner in the interactive watch mode
 - User Feedback and Ratings: Allow users to rate the quality of a generated comparison.
 - Real-time Chatbot Assistant: Integrate a Quibble chatbot to guide users for nevigating the site. 
 
-## Citation
+## Citations
 - React Learning Guide. https://react.dev/learn
 - Mantine Documentation. https://mantine.dev/
 - OpenAI (n.d.). API Reference. OpenAI. https://platform.openai.com/docs/overview 
