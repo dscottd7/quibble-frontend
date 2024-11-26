@@ -1,6 +1,7 @@
 import './App.css';
 import '@mantine/core/styles.css';
 import { Header } from './pages/Header';
+import { Footer } from './pages/Footer';
 import ComparisonHistoryManager from './hooks/ComparisonHistoryManager';
 import { createTheme, MantineProvider, rem, Container } from '@mantine/core';
 import HomePage from './pages/HomePage';
@@ -79,6 +80,7 @@ function App() {
             /* Route for AboutPage */
             <Route path="/about" element={<AboutPage />} />
           </Routes>
+          <Footer />
         </Router> 
       </Container>  
     </MantineProvider>
