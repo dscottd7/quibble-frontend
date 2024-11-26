@@ -1,3 +1,5 @@
 node_modules
 .git
 *.log
+
+# do not list ".env" here if wanting to list a REACT_APP_WEBSOCKET_URL_STRUCTURED there besides localhost, since React doesn't have direct access to runtime environment variables after build time
