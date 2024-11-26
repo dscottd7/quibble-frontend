@@ -1,4 +1,4 @@
-# <img src='./public/quibble.jpg' height = "35"/> Quibble Frontend - AI-Based Product Comparison Tool 
+# <img src='./public/quibble.jpg' height = "35"/> Quibble Frontend-AI-Based Product Comparison Tool 
 
 ## Authors
 - [D. Scott DiPerna](https://github.com/dscottd7)
@@ -46,7 +46,7 @@ This README provides a comprehensive guide to setting up and understanding the Q
 - The layout includes a main product comparison area and a sidebar for saved comparisons.
 
 ## Quibble Architecture
-<img src='./src/assets/Quibble_Architecture.jpg' height = "500"/>
+<img src='./src/assets/Quibble_Architecture.jpg' height = "300"/>
 
 ## Tech Stack
 #### React: For building the user interface.
