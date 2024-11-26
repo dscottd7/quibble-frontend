@@ -1,4 +1,4 @@
-# <img src='./public/quibble.jpg' height = "35"/> Quibble Frontend  AI-Based Product Comparison Tool 
+# <img src='./public/quibble.jpg' height = "35"/> Quibble Frontend - AI-Based Product Comparison Tool 
 
 ## Authors
 - [D. Scott DiPerna](https://github.com/dscottd7)
