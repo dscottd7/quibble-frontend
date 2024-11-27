@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Progress, Grid, Button, Text, Title, Group, Box, Stack, Container, Space, Center, List, Anchor, Image, Card } from '@mantine/core';
+import React from 'react';
+import { Grid, Text, Title, Box, Stack, Space, Center, List, Anchor, Image, Card } from '@mantine/core';
 
 const AboutPage = () => {
 
