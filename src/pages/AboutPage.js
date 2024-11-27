@@ -109,10 +109,10 @@ const AboutPage = () => {
               <Space h="md" />
               <Grid gutter="lg">
                 {/* Row 1 */}
-                <Grid.Col span={{ base: 12, md: 6 }}>
-                  <Card shadow="sm" padding="lg">
+                <Grid.Col span={{ base: 12, md: 6, sm: 6 }}>
+                  <Card shadow="sm" padding="lg" style={{ margin: '0 auto', maxWidth: '100%' }}>
                     <Card.Section>
-                      <Image src="https://ca.slack-edge.com/T04DSF0LW-U07PEJ0Q0GM-a3169e6d74ba-512" h={200} alt="Scott DiPerna" />
+                      <Image src="/scott_bw.jpg" h={200} alt="Scott DiPerna" />
                     </Card.Section>
                     <Title order={4} mt="md">
                       <Anchor c="cyan" href="https://www.linkedin.com/in/dscottdiperna/" target="_blank" underline="hover">Scott DiPerna</Anchor>
@@ -120,8 +120,8 @@ const AboutPage = () => {
                   </Card>
                 </Grid.Col>
 
-                <Grid.Col span={{ base: 12, md: 6 }}>
-                  <Card shadow="sm" padding="lg">
+                <Grid.Col span={{ base: 12, md: 6, sm: 6 }}>
+                  <Card shadow="sm" padding="lg" style={{ margin: '0 auto', maxWidth: '100%' }}>
                     <Card.Section>
                       <Image src="/xinrui.png" h={200} alt="Xinrui Hou" />
                     </Card.Section>
@@ -132,8 +132,8 @@ const AboutPage = () => {
                 </Grid.Col>
 
                 {/* Row 2 */}
-                <Grid.Col span={{ base: 12, md: 6 }}>
-                  <Card shadow="sm" padding="lg">
+                <Grid.Col span={{ base: 12, md: 6, sm: 6 }}>
+                  <Card shadow="sm" padding="lg" style={{ margin: '0 auto', maxWidth: '100%' }}>
                     <Card.Section>
                       <Image src="/edward.png" h={200} alt="Edward Mai" />
                     </Card.Section>
@@ -143,8 +143,8 @@ const AboutPage = () => {
                   </Card>
                 </Grid.Col>
 
-                <Grid.Col span={{ base: 12, md: 6 }}>
-                  <Card shadow="sm" padding="lg">
+                <Grid.Col span={{ base: 12, md: 6, sm: 6 }}>
+                  <Card shadow="sm" padding="lg" style={{ margin: '0 auto', maxWidth: '100%' }}>
                     <Card.Section>
                       <Image src="/brendan.jpg" h={200} alt="Brendan Heinz" />
                     </Card.Section>
