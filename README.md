@@ -10,7 +10,7 @@
 1. [Project Overview](#overview)
 2. [Frontend Features](#product_features)
 3. [Quibble Architecture](#quibble_architecture)
-4. [Tech Stack](#tech_stack)
+4. [Frontend Tech Stack](#tech_stack)
 5. [Available Scripts](#scripts)
 6. [Frontend Walkthrough](#walkthrough)
 7. [Future Enhancements](#future_enhancement)
@@ -23,14 +23,14 @@ Quibble is an AI-powered product comparison tool designed to streamline the proc
 The backend utilizes Selenium to scrape the necessary product information from the given web pages and uses OpenAI to generate a thorough comparison report, highlighting key features, pros, cons, and essential factors, enabling users to make well-informed purchasing decisions.
 
 The Quibble frontend enhances the user experience by:
-
 - Displaying the AI-generated comparison in a clear and structured manner.
 - Offering a feature to save comparisons for future reference, providing convenience and easy access.
 - Allowing users to quickly access the specific products mentioned within the comparison.
 
-This README provides a comprehensive guide to setting up and understanding the Quibble frontend, which is built using React and Mantine UI components, and deployed on Goodgle Cloud.
-You can access the site here:  
-
+This README provides a comprehensive guide to setting up and understanding the Quibble frontend, which is built using React and Mantine UI components, and deployed on Goodgle Cloud. This application requires both the frontend and backend services to be running for proper functionality. 
+- **You can access Quibble backend repo here: https://github.com/dscottd7/quibble-backend **
+- **You can access the deployed site here:  **
+  
 ## Frontend Features
 1. **Product Comparison with OpenAI API**:
    - Users can paste the URLs of two products to compare them.
@@ -54,7 +54,7 @@ You can access the site here:
 ## Quibble Architecture
 <img src='./src/assets/Quibble_Architecture.jpg' height = "300"/>
 
-## Tech Stack
+## Frontend Tech Stack
 - **React: For building the user interface.**
 - **Mantine UI: For beautiful and customizable UI components.**
 - **WebSockets: To manage real-time communication with the backend OpenAI service.**
@@ -87,7 +87,8 @@ Launches the test runner in the interactive watch mode
 - Multiple Product Comparison: Extend functionality to allow comparison of more than two products at once.
 - Database Integration: Store users' saved comparisons in a database instead of local storage to support multiple devices and permanent access.
 - User Feedback and Ratings: Allow users to rate the quality of a generated comparison.
-- Real-time Chatbot Assistant: Integrate a Quibble chatbot to guide users for nevigating the site. 
+- Real-time Chatbot Assistant: Integrate a Quibble chatbot to guide users for nevigating the site.
+- Product Visual Integration: Enhance the comparison feature by scraping product images from relevant websites and displaying them in an organized, visually appealing way.
 
 ## Citations
 - React Learning Guide. https://react.dev/learn
