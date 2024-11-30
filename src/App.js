@@ -63,7 +63,7 @@ function App() {
         <Router>
           <Header />
           <Routes>
-            /* Default route for HomePage */
+            {/* Default route for HomePage */}
             <Route 
               path="/"
               element={
@@ -77,7 +77,7 @@ function App() {
                 />
               }
             />
-            /* Route for AboutPage */
+            {/* Route for AboutPage */}
             <Route path="/about" element={<AboutPage />} />
           </Routes>
           <Footer />
