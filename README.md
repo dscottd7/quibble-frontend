@@ -29,7 +29,7 @@ The Quibble frontend enhances the user experience by:
 
 This README provides a comprehensive guide to setting up and understanding the Quibble frontend, which is built using React and Mantine UI components, and deployed on Goodgle Cloud. This application requires both the frontend and backend services to be running for proper functionality. 
 - **You can access Quibble backend repo here: https://github.com/dscottd7/quibble-backend**
-- **You can access the deployed site here:**
+- **You can access the deployed site here: https://quibble-358506364187.us-central1.run.app/**
   
 ## Frontend Features
 1. **Product Comparison with OpenAI API**:
