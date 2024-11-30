@@ -1,11 +1,15 @@
 import './App.css';
 import '@mantine/core/styles.css';
 import { Header } from './pages/Header';
+import { Footer } from './pages/Footer';
 import ComparisonHistoryManager from './hooks/ComparisonHistoryManager';
 import { createTheme, MantineProvider, rem, Container } from '@mantine/core';
 import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
 import classes from './App.css';
 import cx from 'clsx';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 const theme = createTheme({
@@ -51,21 +55,36 @@ function App() {
     selectedComparison,
     setSelectedComparison
   } = ComparisonHistoryManager();
-  
+
   return (
     <MantineProvider theme={theme}>
-      <Container fluid >
+      
+      <Container fluid>
+        <Router>
           <Header />
-          <HomePage 
-            saveComparison={saveComparison}
-            setSelectedComparison={setSelectedComparison}
-            selectedComparison={selectedComparison}
-            history={history}
-            deleteComparison={deleteComparison}
-            clearAllComparisons={clearAllComparisons}
-          />
-      </Container>
+          <Routes>
+            {/* Default route for HomePage */}
+            <Route 
+              path="/"
+              element={
+                <HomePage 
+                  saveComparison={saveComparison}
+                  setSelectedComparison={setSelectedComparison}
+                  selectedComparison={selectedComparison}
+                  history={history}
+                  deleteComparison={deleteComparison}
+                  clearAllComparisons={clearAllComparisons}
+                />
+              }
+            />
+            {/* Route for AboutPage */}
+            <Route path="/about" element={<AboutPage />} />
+          </Routes>
+          <Footer />
+        </Router> 
+      </Container>  
     </MantineProvider>
   );
 }
+
 export default App;
