@@ -30,6 +30,7 @@ The Quibble frontend enhances the user experience by:
 This README provides a comprehensive guide to setting up and understanding the Quibble frontend, which is built using React and Mantine UI components, and deployed on Goodgle Cloud. This application requires both the frontend and backend services to be running for proper functionality. 
 - **You can access Quibble backend repo here: https://github.com/dscottd7/quibble-backend**
 - **You can access the deployed site here: https://quibble-358506364187.us-central1.run.app/**
+- **Many product websites are able to tested through our web scraping service using Selenium, feel free to have Quibble assist you in making smart purchas decisions**
   
 ## Frontend Features
 1. **Product Comparison with OpenAI API**:
@@ -79,15 +80,18 @@ Launches the test runner in the interactive watch mode
 
 ## Frontend Walkthrough
 
-* **Homepage walkthrough** - visually presents the user's operation in comparing two products.
-<img src='./src/assets/Quibble_Walkthrough.gif'/>
+* **About page walkthrough** - an introduction to our application and team, and a quick walk through for comparing two products. 
+<img src='./src/assets/Quibble_Walkthrough1.gif' width="800"/>
+
+* **Homepage walkthrough** - visually presents the user's operation in comparing two products, saving comparison results and clear all results.
+<img src='./src/assets/Quibble_Walkthrough2.gif' width="800"/>
 
 ## Future Enhancements
 - User Authentication: Allow users to log in and save comparisons to their account.
 - Multiple Product Comparison: Extend functionality to allow comparison of more than two products at once.
 - Database Integration: Store users' saved comparisons in a database instead of local storage to support multiple devices and permanent access.
 - User Feedback and Ratings: Allow users to rate the quality of a generated comparison.
-- Real-time Chatbot Assistant: Integrate a Quibble chatbot to guide users for nevigating the site.
+- Real-time Chatbot Assistant: Integrate a Quibble chatbot to guide users for navigating the site.
 - Product Visual Integration: Enhance the comparison feature by scraping product images from relevant websites and displaying them in an organized, visually appealing way.
 
 ## Citations
