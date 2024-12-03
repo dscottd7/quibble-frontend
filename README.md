@@ -81,10 +81,10 @@ Launches the test runner in the interactive watch mode
 ## Frontend Walkthrough
 
 * **About page walkthrough** - an introduction to our application and team, and a quick walk through for comparing two products. 
-<img src='./src/assets/Quibble_Walkthrough1.gif' width="800"/>
+<img src='./src/assets/Quibble_walkthrough1.gif' width="1000"/>
 
 * **Homepage walkthrough** - visually presents the user's operation in comparing two products, saving comparison results and clear all results.
-<img src='./src/assets/Quibble_Walkthrough2.gif' width="800"/>
+<img src='./src/assets/Quibble_walkthrough2.gif' width="1000"/>
 
 ## Future Enhancements
 - User Authentication: Allow users to log in and save comparisons to their account.
