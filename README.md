@@ -27,9 +27,10 @@ The Quibble frontend enhances the user experience by:
 - Offering a feature to save comparisons for future reference, providing convenience and easy access.
 - Allowing users to quickly access the specific products mentioned within the comparison.
 
-This README provides a comprehensive guide to setting up and understanding the Quibble frontend, which is built using React and Mantine UI components, and deployed on Goodgle Cloud. This application requires both the frontend and backend services to be running for proper functionality. 
+This README provides a comprehensive guide to setting up and understanding the Quibble frontend, which is built using React and Mantine UI components, and deployed on Google Cloud. This application requires both the frontend and backend services to be running for proper functionality. 
 - **You can access Quibble backend repo here: https://github.com/dscottd7/quibble-backend**
 - **You can access the deployed site here: https://quibble-358506364187.us-central1.run.app/**
+- **Many product websites are able to tested through our web scraping service using Selenium, feel free to have Quibble assist you in making smart purchase decisions**
   
 ## Frontend Features
 1. **Product Comparison with OpenAI API**:
@@ -59,7 +60,7 @@ This README provides a comprehensive guide to setting up and understanding the Q
 - **Mantine UI: For beautiful and customizable UI components.**
 - **WebSockets: To manage real-time communication with the backend OpenAI service.**
 - **Local Storage: To store saved comparisons persistently across sessions.**
-- **Google Cloud Platform: The application is deployed into Google Cloud though Docker Image**
+- **Google Cloud Platform: The application is deployed into Google Cloud as a Docker Image.**
 
 ## Available Scripts
 
@@ -74,20 +75,22 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 - the backend service URL will default to `ws://localhost:8000/ws/compare/structured` (for local testing) unless a different URL is specified by setting `REACT_APP_WEBSOCKET_URL_STRUCTURED=<target_backend_url>` in a `.env` file in your working directory.
 - **NOTE**: if building a docker image for local testing or deployment and overriding the default backend service URL per the instruction above, be sure that your are NOT ".dockerignore"-ing your `.env` file (React doesn't have direct access to runtime environment variables after build time). 
 
-Launches the test runner in the interactive watch mode
-`npm test`
+Launch the test runner in the interactive watch mode with `npm test`.
 
 ## Frontend Walkthrough
 
-* **Homepage walkthrough** - visually presents the user's operation in comparing two products.
-<img src='./src/assets/Quibble_Walkthrough.gif'/>
+* **About page walkthrough** - an introduction to our application and team, and a quick walk through for comparing two products. 
+<img src='./src/assets/Quibble_walkthrough1.gif' width="1000"/>
+
+* **Homepage walkthrough** - visually presents the user's operation in comparing two products, saving comparison results and clear all results.
+<img src='./src/assets/Quibble_walkthrough2.gif' width="1000"/>
 
 ## Future Enhancements
 - User Authentication: Allow users to log in and save comparisons to their account.
 - Multiple Product Comparison: Extend functionality to allow comparison of more than two products at once.
 - Database Integration: Store users' saved comparisons in a database instead of local storage to support multiple devices and permanent access.
 - User Feedback and Ratings: Allow users to rate the quality of a generated comparison.
-- Real-time Chatbot Assistant: Integrate a Quibble chatbot to guide users for nevigating the site.
+- Real-time Chatbot Assistant: Integrate a Quibble chatbot to guide users for navigating the site.
 - Product Visual Integration: Enhance the comparison feature by scraping product images from relevant websites and displaying them in an organized, visually appealing way.
 
 ## Citations
